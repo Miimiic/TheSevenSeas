@@ -54,6 +54,12 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.zip
+*.7z
+*.rar
+*.fbx
+*.psd
+*.tga
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -84,6 +90,13 @@ InitTestScene*.unity*
 /[Aa]ssets/StreamingAssets/aa*
 /[Aa]ssets/AddressableAssetsData/link.xml*
 /[Aa]ssets/Addressables_Temp*
+# Asset packs / third-party content
+/[Aa]ssets/AssetPacks/
+/[Aa]ssets/ThirdParty/
+/[Aa]ssets/DownloadedAssets/
+# Large asset files
+
+
 # By default, Addressables content builds will generate addressables_content_state.bin
 # files in platform-specific subfolders, for example:
 # /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
