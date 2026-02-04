@@ -25,9 +25,13 @@ public class HealthItemController : MonoBehaviour
     {
         if(other.gameObject.tag=="Player")
         {
-            other.gameObject.GetComponent<PlayerHealthController>().Heal(healingAmount);
-            Destroy(gameObject);
+            // Check it wont waste the healing item on full health
+            PlayerHealthController playerHealthController = other.gameObject.GetComponent<PlayerHealthController>();
+            if(playerHealthController.GetCurrentHealth()!=playerHealthController.GetMaxHealth())
+            {
+                playerHealthController.Heal(healingAmount);
+                Destroy(gameObject);
+            }
         }
     }
-
 }

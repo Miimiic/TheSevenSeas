@@ -48,7 +48,7 @@ public class PlayerHealthController : MonoBehaviour
         // Only do the passive heal if In zone, not at full health, isnt currently mid passive heal (Prevents a tonne of calls every frame withing the zone), and the havent taken damage for long enough
         if (isInPassiveHealZone&&playerCurrentHealth<playerMaxHealth&&!isPassiveHealing&& timeSinceDamage >= 7f)
         {
-            StartCoroutine(PassiveHeal());
+            StartCoroutine(PassiveHeal(15));
         }
     }
     // ------------------------------- Private Functions -------------------------------
@@ -68,17 +68,7 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
-    // ------------------------------- Getters and Setters -------------------------------
-
-    public int GetCurrentHealth()
-    {
-        return playerCurrentHealth;
-    }
-
-    public int GetMaxHealth()
-    {
-        return playerMaxHealth;
-    }
+    // ------------------------------- Damage and Heal -------------------------------
 
     public void Damage(int damageNumber)
     {
@@ -112,11 +102,22 @@ public class PlayerHealthController : MonoBehaviour
         HandleHealthText();
     }
 
+    // ------------------------------- Getters and Setters -------------------------------
+
+    public int GetCurrentHealth()
+    {
+        return playerCurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return playerMaxHealth;
+    }
+
     public void SetCurrentHealth(int newHealth)
     {
         playerCurrentHealth = newHealth;
 
-        CheckForDeath();
         HandleHealthText();
     }
 
@@ -133,7 +134,13 @@ public class PlayerHealthController : MonoBehaviour
         isInPassiveHealZone = newZone;
     }
 
-    // ------------------------------- Invincibility Coroutine ------------------------------- 
+    public void TriggerInvincibility(float seconds)
+    {
+        // UI Feedback for Invincibility
+        StartCoroutine(InvincibiltyTimer(seconds));
+    }
+
+    // ------------------------------- Coroutines ------------------------------- 
 
     // Could also use this for an invincibilty powerup ???
     IEnumerator InvincibiltyTimer(float invincibilitySeconds)
@@ -145,7 +152,7 @@ public class PlayerHealthController : MonoBehaviour
         yield break;
     }
 
-    IEnumerator PassiveHeal()
+    IEnumerator PassiveHeal(int passiveHealAmount)
     {
         isPassiveHealing = true;
 
@@ -153,9 +160,8 @@ public class PlayerHealthController : MonoBehaviour
         while (playerCurrentHealth < playerMaxHealth && isInPassiveHealZone && timeSinceDamage >= 7f)
         {
             Debug.Log("Passive Healing");
-            // Heal 10% of max health every half second
-            Heal(1);
-            yield return new WaitForSeconds(0.5f);
+            Heal(passiveHealAmount);
+            yield return new WaitForSeconds(0.75f);
         }
 
         isPassiveHealing = false;
