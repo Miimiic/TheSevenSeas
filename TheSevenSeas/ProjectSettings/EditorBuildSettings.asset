@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Josh/Scenes/Main Menu.unity
+    guid: e42e215241274724fa7290dd8b3e82b5
+  - enabled: 1
+    path: Assets/Josh/Scenes/Main Gameplay.unity
+    guid: dd7676a4187537a4f88d5a931b9a69e6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
