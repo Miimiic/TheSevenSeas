@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bulletCode : MonoBehaviour
 {
-    public int timeForBulletToDespawn;
+    public float timeForBulletToDespawn;
     private void Awake()
     {
         StartCoroutine(waiter());

@@ -5,17 +5,22 @@ using UnityEngine;
 public class GunMechanics : MonoBehaviour
 {
     public Rigidbody AmmoType;//Change this based on what you want to shoot
-    public GameObject Barrel;//Change this based on where you want to shoot from
+    public GameObject Barrel,muzzleFlash,bulletHole;//Change this based on where you want to shoot from
     [SerializeField] private int BulletSpeed;//How quick And far you want the bullet to go
-    [SerializeField] private bool FullAuto;//Self explanitory
-    [SerializeField] private float timeBetweenShooting,spread,reloadTime,timeBetweenShots;//Self explanitory
+    [SerializeField] private bool FullAuto, raycast;//Self explanitory
+    [SerializeField] private float timeBetweenShooting,spread,reloadTime,timeBetweenShots,range;//Self explanitory
      bool shooting,readyToShoot,reloading;
     [SerializeField] private int magSize, bulletsPerTap;
     int bulletsLeft, bulletsShot;
     public TextMeshProUGUI text;
     public AudioClip reloadAudio,shootAudio,emptyMagAudio;
     public AudioSource gunSource;
-   
+    public Camera fpsCam;
+    public Transform attackpoint;
+    public RaycastHit rayHit;
+    public LayerMask whatIsEnemy;
+
+
     private void Update()
     {
         takeInput();
@@ -73,10 +78,22 @@ public class GunMechanics : MonoBehaviour
         
         float x = Random.Range(-spread,spread);
         float y = Random.Range(-spread, spread);
-
-        Rigidbody justShotRB;
-        justShotRB = Instantiate(AmmoType, Barrel.transform.position, Quaternion.identity);
-        justShotRB.linearVelocity = transform.TransformDirection(Vector3.forward * BulletSpeed);
+        if (!raycast)
+        {
+            Rigidbody justShotRB;
+            justShotRB = Instantiate(AmmoType, Barrel.transform.position, Quaternion.identity);
+            justShotRB.linearVelocity = transform.TransformDirection(Vector3.forward * BulletSpeed);
+        }
+        if (raycast)
+        {
+            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out rayHit, range, whatIsEnemy))
+            {
+                Debug.Log(rayHit.collider.name);
+                //rayhit get ememy health script to damage it for raycast;
+            }
+            Instantiate(bulletHole, rayHit.point, Quaternion.Euler(0, 180, 0));
+        }
+        Instantiate(muzzleFlash, attackpoint.position,Quaternion.identity);
         bulletsLeft--;
         bulletsShot--;
         Invoke("resetReady", timeBetweenShooting);
