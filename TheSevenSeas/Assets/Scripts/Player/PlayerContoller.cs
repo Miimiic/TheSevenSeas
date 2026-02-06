@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class FPSControllerRB : MonoBehaviour
+public class PlayerController: MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;

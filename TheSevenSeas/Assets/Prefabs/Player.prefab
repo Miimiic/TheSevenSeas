@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 3235594711314208673}
   - component: {fileID: 1791310458717791318}
   - component: {fileID: 7527413281214239806}
+  - component: {fileID: 3430265552268999219}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -482,10 +483,10 @@ MonoBehaviour:
   groundCheckDistance: 0.5
   groundMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
   mouseSensitivity: 10
   smoothMouse: 1
-  smoothing: 20
+  smoothing: 18
   cameraTransform: {fileID: 1299534325949950826}
   groundCheckPoint: {fileID: 1857035556388179997}
   groundCheckRadius: 0.3
@@ -505,8 +506,27 @@ MonoBehaviour:
   updateInterval: 2
   cullingLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8
   useSpatialPartitioning: 0
   gridCellSize: 10
   useFading: 0
   fadeStartDistance: 40
+--- !u!114 &3430265552268999219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6921817462840612580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724ecad926ece52439e097bd18a1639e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guiHealthText: {fileID: 0}
+  playerCurrentHealth: 0
+  playerMaxHealth: 0
+  isPassiveHealing: 0
+  isInPassiveHealZone: 0
+  timeSinceDamage: 0
+  invincibility: 0

@@ -71,10 +71,6 @@ public class GridSpawner : MonoBehaviour
     
     private int cullingLayer = -1;
     
-    // Queues for spawning on the main thread
-    private Queue<SpawnData> lightsToSpawn = new Queue<SpawnData>();
-    private Queue<SpawnData> wallsToSpawn = new Queue<SpawnData>();
-    
     private struct SpawnData
     {
         public Vector3 position;
@@ -117,19 +113,43 @@ public class GridSpawner : MonoBehaviour
         }
     }
     
-    void Update()
+    // ---------------- SYNCHRONOUS SPAWNING FOR EDIT MODE ----------------
+    public void SpawnLightsImmediate()
     {
-        // Process spawn queues on the main thread (Unity objects can only be created on main thread)
-        if (lightsToSpawn.Count > 0)
+        if (lightPrefab == null)
         {
-            int spawnedThisFrame = 0;
-            while (lightsToSpawn.Count > 0 && spawnedThisFrame < objectsPerFrame)
-            {
-                SpawnData data = lightsToSpawn.Dequeue();
-                InstantiateLight(data.position, data.rotation);
-                lightsSpawned++;
-                spawnedThisFrame++;
-            }
+            Debug.LogError("No light prefab assigned!");
+            return;
+        }
+        
+        if (lightParent == null)
+            lightParent = transform;
+        
+        // Cache the layer index
+        if (assignCullingLayer && cullingLayer == -1)
+        {
+            cullingLayer = LayerMask.NameToLayer(cullingLayerName);
+        }
+        
+        isSpawning = true;
+        lightsSpawned = 0;
+        
+        Vector3 centerPosition = Vector3.zero;
+        if (spawnCenterReference != null)
+        {
+            centerPosition = spawnCenterReference.position;
+        }
+        
+        List<SpawnData> positions = CalculateLightPositionsSync(centerPosition);
+        totalLightsToSpawn = positions.Count;
+        
+        if (showProgress)
+            Debug.Log($"Spawning {totalLightsToSpawn} lights immediately...");
+        
+        foreach (var data in positions)
+        {
+            InstantiateLight(data.position, data.rotation);
+            lightsSpawned++;
             
             if (showProgress && lightsSpawned % 100 == 0)
             {
@@ -138,16 +158,58 @@ public class GridSpawner : MonoBehaviour
             }
         }
         
-        if (wallsToSpawn.Count > 0)
+        isSpawning = false;
+        
+        if (distanceRenderer != null)
         {
-            int spawnedThisFrame = 0;
-            while (wallsToSpawn.Count > 0 && spawnedThisFrame < objectsPerFrame)
-            {
-                SpawnData data = wallsToSpawn.Dequeue();
-                InstantiateWall(data.position, data.rotation);
-                wallsSpawned++;
-                spawnedThisFrame++;
-            }
+            distanceRenderer.RefreshTrackedObjects();
+        }
+        
+        if (showProgress)
+            Debug.Log($"Light spawning complete! Total: {lightsSpawned}");
+        
+        #if UNITY_EDITOR
+        EditorUtility.SetDirty(gameObject);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        #endif
+    }
+    
+    public void SpawnWallsImmediate()
+    {
+        if (wallPrefab == null)
+        {
+            Debug.LogError("No wall prefab assigned!");
+            return;
+        }
+        
+        if (wallParent == null)
+            wallParent = transform;
+        
+        // Cache the layer index
+        if (assignCullingLayer && cullingLayer == -1)
+        {
+            cullingLayer = LayerMask.NameToLayer(cullingLayerName);
+        }
+        
+        isSpawning = true;
+        wallsSpawned = 0;
+        
+        Vector3 centerPosition = Vector3.zero;
+        if (spawnCenterReference != null)
+        {
+            centerPosition = spawnCenterReference.position;
+        }
+        
+        List<SpawnData> positions = CalculateWallPositionsSync(centerPosition);
+        totalWallsToSpawn = positions.Count;
+        
+        if (showProgress)
+            Debug.Log($"Spawning {totalWallsToSpawn} walls immediately...");
+        
+        foreach (var data in positions)
+        {
+            InstantiateWall(data.position, data.rotation);
+            wallsSpawned++;
             
             if (showProgress && wallsSpawned % 100 == 0)
             {
@@ -156,55 +218,25 @@ public class GridSpawner : MonoBehaviour
             }
         }
         
-        // Check if spawning is complete
-        if (isSpawning && lightsToSpawn.Count == 0 && wallsToSpawn.Count == 0)
-        {
-            isSpawning = false;
-            
-            // Notify the distance renderer to refresh its tracked objects
-            if (distanceRenderer != null)
-            {
-                distanceRenderer.RefreshTrackedObjects();
-            }
-            
-            if (showProgress)
-            {
-                Debug.Log($"Spawning complete! Total lights: {lightsSpawned}, Total walls: {wallsSpawned}");
-            }
-        }
-    }
-    
-    // ---------------- ASYNC LIGHTS ----------------
-    public async Task SpawnLightsAsync()
-    {
-        if (lightPrefab == null)
-        {
-            Debug.LogError("No light prefab assigned!");
-            return;
-        }
+        isSpawning = false;
         
-        isSpawning = true;
-        lightsSpawned = 0;
-        lightsToSpawn.Clear();
-        
-        // CRITICAL: Cache the center position on the MAIN THREAD before going to background thread
-        // Unity objects can't be accessed from background threads
-        Vector3 centerPosition = Vector3.zero;
-        if (spawnCenterReference != null)
+        if (distanceRenderer != null)
         {
-            centerPosition = spawnCenterReference.position;
+            distanceRenderer.RefreshTrackedObjects();
         }
-        
-        // Calculate positions on background thread, passing the cached position
-        await Task.Run(() => CalculateLightPositions(centerPosition));
         
         if (showProgress)
-            Debug.Log($"Calculated {totalLightsToSpawn} light positions. Spawning...");
+            Debug.Log($"Wall spawning complete! Total: {wallsSpawned}");
+        
+        #if UNITY_EDITOR
+        EditorUtility.SetDirty(gameObject);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        #endif
     }
     
-    private void CalculateLightPositions(Vector3 center)
+    private List<SpawnData> CalculateLightPositionsSync(Vector3 center)
     {
-        List<SpawnData> tempList = new List<SpawnData>();
+        List<SpawnData> positions = new List<SpawnData>();
         
         for (float x = -lightRange; x <= lightRange; x += lightSpacing)
         {
@@ -216,14 +248,14 @@ public class GridSpawner : MonoBehaviour
                     rotation = Quaternion.identity,
                     isLight = true
                 };
-                tempList.Add(data);
+                positions.Add(data);
             }
         }
         
         // Sort by distance from center if enabled
         if (spawnFromCenter)
         {
-            tempList.Sort((a, b) =>
+            positions.Sort((a, b) =>
             {
                 float distA = Vector3.Distance(new Vector3(a.position.x, 0, a.position.z), 
                                               new Vector3(center.x, 0, center.z));
@@ -233,16 +265,166 @@ public class GridSpawner : MonoBehaviour
             });
         }
         
-        totalLightsToSpawn = tempList.Count;
+        return positions;
+    }
+    
+    private List<SpawnData> CalculateWallPositionsSync(Vector3 center)
+    {
+        List<SpawnData> positions = new List<SpawnData>();
+        System.Random random = new System.Random();
         
-        // Transfer to main thread queue (lock for thread safety)
-        lock (lightsToSpawn)
+        float x = -wallRange;
+        while (x <= wallRange)
         {
-            foreach (var data in tempList)
+            float z = -wallRange;
+            while (z <= wallRange)
             {
-                lightsToSpawn.Enqueue(data);
+                // Random 45-degree rotation
+                float randomYRotation = 45f * random.Next(0, 8);
+                
+                SpawnData data = new SpawnData
+                {
+                    position = new Vector3(x, wallHeight, z),
+                    rotation = Quaternion.Euler(0f, randomYRotation, 0f),
+                    isLight = false
+                };
+                positions.Add(data);
+                
+                z += (float)(random.NextDouble() * (wallMaxSpacing - wallMinSpacing) + wallMinSpacing);
             }
+            
+            x += (float)(random.NextDouble() * (wallMaxSpacing - wallMinSpacing) + wallMinSpacing);
         }
+        
+        // Sort by distance from center if enabled
+        if (spawnFromCenter)
+        {
+            positions.Sort((a, b) =>
+            {
+                float distA = Vector3.Distance(new Vector3(a.position.x, 0, a.position.z), 
+                                              new Vector3(center.x, 0, center.z));
+                float distB = Vector3.Distance(new Vector3(b.position.x, 0, b.position.z), 
+                                              new Vector3(center.x, 0, center.z));
+                return distA.CompareTo(distB);
+            });
+        }
+        
+        return positions;
+    }
+    
+    // ---------------- ASYNC SPAWNING FOR RUNTIME ----------------
+    public async Task SpawnLightsAsync()
+    {
+        if (lightPrefab == null)
+        {
+            Debug.LogError("No light prefab assigned!");
+            return;
+        }
+        
+        // In edit mode, use immediate spawning
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            SpawnLightsImmediate();
+            return;
+        }
+        #endif
+        
+        isSpawning = true;
+        lightsSpawned = 0;
+        
+        Vector3 centerPosition = Vector3.zero;
+        if (spawnCenterReference != null)
+        {
+            centerPosition = spawnCenterReference.position;
+        }
+        
+        List<SpawnData> positions = await Task.Run(() => CalculateLightPositionsSync(centerPosition));
+        totalLightsToSpawn = positions.Count;
+        
+        if (showProgress)
+            Debug.Log($"Spawning {totalLightsToSpawn} lights...");
+        
+        foreach (var data in positions)
+        {
+            InstantiateLight(data.position, data.rotation);
+            lightsSpawned++;
+            
+            if (showProgress && lightsSpawned % 100 == 0)
+            {
+                float progress = (float)lightsSpawned / totalLightsToSpawn * 100f;
+                Debug.Log($"Spawning lights: {lightsSpawned}/{totalLightsToSpawn} ({progress:F1}%)");
+            }
+            
+            await Task.Yield();
+        }
+        
+        isSpawning = false;
+        
+        if (distanceRenderer != null)
+        {
+            distanceRenderer.RefreshTrackedObjects();
+        }
+        
+        if (showProgress)
+            Debug.Log($"Light spawning complete! Total: {lightsSpawned}");
+    }
+    
+    public async Task SpawnWallsAsync()
+    {
+        if (wallPrefab == null)
+        {
+            Debug.LogError("No wall prefab assigned!");
+            return;
+        }
+        
+        // In edit mode, use immediate spawning
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            SpawnWallsImmediate();
+            return;
+        }
+        #endif
+        
+        isSpawning = true;
+        wallsSpawned = 0;
+        
+        Vector3 centerPosition = Vector3.zero;
+        if (spawnCenterReference != null)
+        {
+            centerPosition = spawnCenterReference.position;
+        }
+        
+        List<SpawnData> positions = await Task.Run(() => CalculateWallPositionsSync(centerPosition));
+        totalWallsToSpawn = positions.Count;
+        
+        if (showProgress)
+            Debug.Log($"Spawning {totalWallsToSpawn} walls...");
+        
+        foreach (var data in positions)
+        {
+            InstantiateWall(data.position, data.rotation);
+            wallsSpawned++;
+            
+            if (showProgress && wallsSpawned % 100 == 0)
+            {
+                float progress = (float)wallsSpawned / totalWallsToSpawn * 100f;
+                Debug.Log($"Spawning walls: {wallsSpawned}/{totalWallsToSpawn} ({progress:F1}%)");
+            }
+            
+            await Task.Yield();
+        }
+        
+        isSpawning = false;
+        
+        if (distanceRenderer != null)
+        {
+            distanceRenderer.RefreshTrackedObjects();
+        }
+        
+        if (showProgress)
+            Debug.Log($"Wall spawning complete! Total: {wallsSpawned}");
     }
     
     private void InstantiateLight(Vector3 position, Quaternion rotation)
@@ -263,90 +445,6 @@ public class GridSpawner : MonoBehaviour
             
             Light light = spawned.GetComponent<Light>();
             if (light != null) light.enabled = false;
-        }
-    }
-    
-    // ---------------- ASYNC WALLS ----------------
-    public async Task SpawnWallsAsync()
-    {
-        if (wallPrefab == null)
-        {
-            Debug.LogError("No wall prefab assigned!");
-            return;
-        }
-        
-        isSpawning = true;
-        wallsSpawned = 0;
-        wallsToSpawn.Clear();
-        
-        // CRITICAL: Cache the center position on the MAIN THREAD before going to background thread
-        // Unity objects can't be accessed from background threads
-        Vector3 centerPosition = Vector3.zero;
-        if (spawnCenterReference != null)
-        {
-            centerPosition = spawnCenterReference.position;
-        }
-        
-        // Calculate positions on background thread, passing the cached position
-        await Task.Run(() => CalculateWallPositions(centerPosition));
-        
-        if (showProgress)
-            Debug.Log($"Calculated {totalWallsToSpawn} wall positions. Spawning...");
-    }
-    
-    private void CalculateWallPositions(Vector3 center)
-    {
-        List<SpawnData> tempList = new List<SpawnData>();
-        
-        // Use separate Random for thread safety
-        System.Random random = new System.Random();
-        
-        float x = -wallRange;
-        while (x <= wallRange)
-        {
-            float z = -wallRange;
-            while (z <= wallRange)
-            {
-                // Random 45-degree rotation
-                float randomYRotation = 45f * random.Next(0, 8);
-                
-                SpawnData data = new SpawnData
-                {
-                    position = new Vector3(x, wallHeight, z),
-                    rotation = Quaternion.Euler(0f, randomYRotation, 0f),
-                    isLight = false
-                };
-                tempList.Add(data);
-                
-                // Step forward by random spacing
-                z += (float)(random.NextDouble() * (wallMaxSpacing - wallMinSpacing) + wallMinSpacing);
-            }
-            
-            x += (float)(random.NextDouble() * (wallMaxSpacing - wallMinSpacing) + wallMinSpacing);
-        }
-        
-        // Sort by distance from center if enabled
-        if (spawnFromCenter)
-        {
-            tempList.Sort((a, b) =>
-            {
-                float distA = Vector3.Distance(new Vector3(a.position.x, 0, a.position.z), 
-                                              new Vector3(center.x, 0, center.z));
-                float distB = Vector3.Distance(new Vector3(b.position.x, 0, b.position.z), 
-                                              new Vector3(center.x, 0, center.z));
-                return distA.CompareTo(distB);
-            });
-        }
-        
-        totalWallsToSpawn = tempList.Count;
-        
-        // Transfer to main thread queue (lock for thread safety)
-        lock (wallsToSpawn)
-        {
-            foreach (var data in tempList)
-            {
-                wallsToSpawn.Enqueue(data);
-            }
         }
     }
     
@@ -388,14 +486,20 @@ public class GridSpawner : MonoBehaviour
         ClearChildren(lightParent);
         lightsSpawned = 0;
         totalLightsToSpawn = 0;
-        lightsToSpawn.Clear();
         Debug.Log("Lights cleared!");
         
-        // Refresh the distance renderer
         if (distanceRenderer != null)
         {
             distanceRenderer.RefreshTrackedObjects();
         }
+        
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            EditorUtility.SetDirty(gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        }
+        #endif
     }
     
     public void ClearWalls()
@@ -406,25 +510,44 @@ public class GridSpawner : MonoBehaviour
         ClearChildren(wallParent);
         wallsSpawned = 0;
         totalWallsToSpawn = 0;
-        wallsToSpawn.Clear();
         Debug.Log("Walls cleared!");
         
-        // Refresh the distance renderer
         if (distanceRenderer != null)
         {
             distanceRenderer.RefreshTrackedObjects();
         }
+        
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            EditorUtility.SetDirty(gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        }
+        #endif
     }
     
     void ClearChildren(Transform parentTransform)
     {
-        for (int i = parentTransform.childCount - 1; i >= 0; i--)
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
         {
-            DestroyImmediate(parentTransform.GetChild(i).gameObject);
+            // Use DestroyImmediate in edit mode
+            for (int i = parentTransform.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(parentTransform.GetChild(i).gameObject);
+            }
+        }
+        else
+        #endif
+        {
+            // Use Destroy in play mode
+            for (int i = parentTransform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(parentTransform.GetChild(i).gameObject);
+            }
         }
     }
     
-    // Get spawning progress (0-1)
     public float GetSpawningProgress()
     {
         int totalToSpawn = totalLightsToSpawn + totalWallsToSpawn;
@@ -457,7 +580,6 @@ public class ReadOnlyDrawer : PropertyDrawer
     }
 }
 
-// ---------------- CUSTOM INSPECTOR ----------------
 [CustomEditor(typeof(GridSpawner))]
 public class GridSpawnerEditor : Editor
 {
@@ -482,13 +604,20 @@ public class GridSpawnerEditor : Editor
         GUILayout.Space(5);
         
         // Light buttons
-        GUILayout.Label("Manual Controls (Editor Only)", EditorStyles.boldLabel);
+        GUILayout.Label("Manual Controls", EditorStyles.boldLabel);
         
         EditorGUI.BeginDisabledGroup(spawner.IsSpawning());
         
         if (GUILayout.Button("Spawn Lights", GUILayout.Height(30)))
         {
-            spawner.SpawnLights();
+            if (!Application.isPlaying)
+            {
+                spawner.SpawnLightsImmediate();
+            }
+            else
+            {
+                spawner.SpawnLights();
+            }
         }
         
         if (GUILayout.Button("Clear Lights", GUILayout.Height(30)))
@@ -505,7 +634,14 @@ public class GridSpawnerEditor : Editor
         // Wall buttons
         if (GUILayout.Button("Spawn Walls", GUILayout.Height(30)))
         {
-            spawner.SpawnWalls();
+            if (!Application.isPlaying)
+            {
+                spawner.SpawnWallsImmediate();
+            }
+            else
+            {
+                spawner.SpawnWalls();
+            }
         }
         
         if (GUILayout.Button("Clear Walls", GUILayout.Height(30)))
@@ -518,6 +654,13 @@ public class GridSpawnerEditor : Editor
         }
         
         EditorGUI.EndDisabledGroup();
+        
+        // Info text
+        if (!Application.isPlaying)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.HelpBox("Edit Mode: Objects will spawn immediately. Remember to save the scene after spawning!", MessageType.Info);
+        }
         
         // Repaint to update progress bar
         if (spawner.IsSpawning())

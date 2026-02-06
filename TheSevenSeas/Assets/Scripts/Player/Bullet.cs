@@ -2,7 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class bulletCode : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     public int timeForBulletToDespawn;
     private void Awake()

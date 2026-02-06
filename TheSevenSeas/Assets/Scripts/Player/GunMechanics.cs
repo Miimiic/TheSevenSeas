@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 
-public class GunMechanics : MonoBehaviour
+public class GunController : MonoBehaviour
 {
     public Rigidbody AmmoType;//Change this based on what you want to shoot
     public GameObject Barrel;//Change this based on where you want to shoot from
