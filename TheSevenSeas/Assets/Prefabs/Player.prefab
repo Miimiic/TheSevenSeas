@@ -484,12 +484,14 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  flashlight: {fileID: 6858841057813158198}
   mouseSensitivity: 10
   smoothMouse: 1
   smoothing: 18
   cameraTransform: {fileID: 1299534325949950826}
   groundCheckPoint: {fileID: 1857035556388179997}
   groundCheckRadius: 0.3
+  buildModeKey: 98
 --- !u!114 &7527413281214239806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,8 +526,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guiHealthText: {fileID: 0}
-  playerCurrentHealth: 0
-  playerMaxHealth: 0
+  playerCurrentHealth: 10
+  playerMaxHealth: 100
   isPassiveHealing: 0
   isInPassiveHealZone: 0
   timeSinceDamage: 0

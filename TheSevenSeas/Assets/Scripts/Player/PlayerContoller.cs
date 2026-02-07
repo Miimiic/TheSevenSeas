@@ -9,7 +9,8 @@ public class PlayerController: MonoBehaviour
     public float jumpForce = 5f;
     public float groundCheckDistance = 0.3f;
     public LayerMask groundMask;
-    
+    public GameObject flashlight; // Optional flashlight reference
+
     [Header("Mouse Look")]
     public float mouseSensitivity = 2f;
     
@@ -26,9 +27,13 @@ public class PlayerController: MonoBehaviour
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.3f;
     
+    [Header("Build Mode")]
+    public KeyCode buildModeKey = KeyCode.B;
+    
     private Rigidbody rb;
     private float xRotation = 0f;
     private bool isGrounded;
+    private bool isBuildMode = false;
     
     // Mouse smoothing variables
     private Vector2 currentMouseDelta;
@@ -53,22 +58,31 @@ public class PlayerController: MonoBehaviour
     
     void Update()
     {
-        // Toggle cursor lock with Escape
+        // Toggle build mode
+        if (Input.GetKeyDown(buildModeKey))
+        {
+            ToggleBuildMode();
+        }
+        
+        // Toggle cursor lock with Escape (only in normal mode)
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Cursor.lockState == CursorLockMode.Locked)
+            if (!isBuildMode)
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                if (Cursor.lockState == CursorLockMode.Locked)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
             }
         }
         
-        // Only handle mouse look if cursor is locked
+        // Always handle mouse look when cursor is locked (even in build mode)
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             HandleMouseLook();
@@ -76,14 +90,22 @@ public class PlayerController: MonoBehaviour
         
         CheckGround();
         
+        // Allow jumping in both modes
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+        }
+
+        // Flashlight toggle (optional, works in both modes)
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ToggleFlashlight();
         }
     }
     
     void FixedUpdate()
     {
+        // Handle movement in both normal and build mode
         HandleMovement();
     }
     
@@ -165,6 +187,30 @@ public class PlayerController: MonoBehaviour
             groundMask
         );
     }
+
+    void ToggleFlashlight()
+    {
+        if (flashlight != null)
+        {
+            flashlight.SetActive(!flashlight.activeSelf);
+        }
+    }
+    
+    void ToggleBuildMode()
+    {
+        isBuildMode = !isBuildMode;
+        RefreshCursorState();
+        
+        Debug.Log(isBuildMode ? "Build Mode: ON" : "Build Mode: OFF");
+    }
+    
+    public void RefreshCursorState()
+    {
+        // In build mode, keep cursor locked so camera can move
+        // The grid system will handle mouse input for placement
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     
     void OnDrawGizmosSelected()
     {
@@ -184,5 +230,11 @@ public class PlayerController: MonoBehaviour
     public void SetSmoothing(float smoothAmount)
     {
         smoothing = Mathf.Clamp(smoothAmount, 1f, 20f);
+    }
+    
+    // Public method for build mode status
+    public bool IsBuildMode()
+    {
+        return isBuildMode;
     }
 }
