@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
-
+using System.Runtime.CompilerServices;
+using System.Collections;
 
 public class GunMechanics : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GunMechanics : MonoBehaviour
     [SerializeField] private int BulletSpeed;//How quick And far you want the bullet to go
     [SerializeField] private bool FullAuto, raycast;//Self explanitory
     [SerializeField] private float timeBetweenShooting,spread,reloadTime,timeBetweenShots,range;//Self explanitory
-     bool shooting,readyToShoot,reloading;
+     bool shooting,readyToShoot,reloading, playedEmptySound;
     [SerializeField] private int magSize, bulletsPerTap;
     int bulletsLeft, bulletsShot;
     public TextMeshProUGUI text;
@@ -19,7 +20,7 @@ public class GunMechanics : MonoBehaviour
     public Transform attackpoint;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
-
+    
 
     private void Update()
     {
@@ -56,19 +57,30 @@ public class GunMechanics : MonoBehaviour
         
         
         }
-        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0)
+        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0 &&!FullAuto )
+        {
+           
+            gunSource.PlayOneShot(emptyMagAudio);
+            
+
+
+        }
+        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0 && FullAuto && !playedEmptySound)
         {
             gunSource.PlayOneShot(emptyMagAudio);
+            playedEmptySound = true;
 
         }
 
 
     }
+    
     void reload()
     {
         gunSource.PlayOneShot(reloadAudio);
         reloading = true;
         Invoke("reloadFinished",reloadTime);
+        playedEmptySound = false;
 
     }
 
