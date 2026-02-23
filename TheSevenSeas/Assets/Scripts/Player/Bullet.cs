@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int timeForBulletToDespawn;
+    public float damage;
     private void Awake()
     {
         StartCoroutine(waiter());
