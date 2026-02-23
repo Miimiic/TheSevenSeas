@@ -11,6 +11,10 @@ public class Melee_Handler : MonoBehaviour
     private bool WaitingToSwing;
     public string AttackAnimation;
     public Animator Animator;
+ 
+    
+
+    
 
 
     // Update is called once per frame
@@ -60,5 +64,21 @@ public class Melee_Handler : MonoBehaviour
         {
             Debug.Log("Hit");
         }
+
+        if(other.tag == "Breakable") 
+        {
+
+            Debug.Log("Hit Obj");
+
+
+          var ObjHealth = other.GetComponent<objectHealth>();
+
+            ObjHealth.takeDamage(DamageOnHit);
+
+
+
+
+        }
     }
+    
 }
