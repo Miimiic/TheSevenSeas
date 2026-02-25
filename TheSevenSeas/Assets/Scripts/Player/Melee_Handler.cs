@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Melee_Handler : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Melee_Handler : MonoBehaviour
     public string AttackAnimation;
     public Animator Animator;
     public int durability;
+    public TextMeshProUGUI durabilityText;
  
     
 
@@ -32,8 +34,10 @@ public class Melee_Handler : MonoBehaviour
         {
 
             Destroy(gameObject);
+
         
         }
+        durabilityText.SetText(durability.ToString());
     }
     void canWeAttack()
     {
