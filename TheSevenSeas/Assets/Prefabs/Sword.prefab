@@ -128,6 +128,7 @@ MonoBehaviour:
   WaitTimeBetweenSwings: 0.5
   AttackAnimation: SwordSwing
   Animator: {fileID: 4883810783930753944}
+  durability: 5
 --- !u!95 &4883810783930753944
 Animator:
   serializedVersion: 7

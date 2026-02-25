@@ -11,6 +11,7 @@ public class Melee_Handler : MonoBehaviour
     private bool WaitingToSwing;
     public string AttackAnimation;
     public Animator Animator;
+    public int durability;
  
     
 
@@ -26,6 +27,12 @@ public class Melee_Handler : MonoBehaviour
         {
             canWeAttack();
             WaitingToSwing = true;
+        }
+        if (durability <= 0) 
+        {
+
+            Destroy(gameObject);
+        
         }
     }
     void canWeAttack()
@@ -63,6 +70,7 @@ public class Melee_Handler : MonoBehaviour
         if(other.tag == "Enemy")
         {
             Debug.Log("Hit");
+            durability -= 1;
         }
 
         if(other.tag == "Breakable") 
@@ -70,7 +78,7 @@ public class Melee_Handler : MonoBehaviour
 
             Debug.Log("Hit Obj");
 
-
+            durability -= 1;
           var ObjHealth = other.GetComponent<objectHealth>();
 
             ObjHealth.takeDamage(DamageOnHit);
