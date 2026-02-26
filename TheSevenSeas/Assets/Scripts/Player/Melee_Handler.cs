@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Melee_Handler : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class Melee_Handler : MonoBehaviour
     private bool WaitingToSwing;
     public string AttackAnimation;
     public Animator Animator;
+    public int durability;
+    public TextMeshProUGUI durabilityText;
+ 
+    
+
+    
 
 
     // Update is called once per frame
@@ -23,6 +30,14 @@ public class Melee_Handler : MonoBehaviour
             canWeAttack();
             WaitingToSwing = true;
         }
+        if (durability <= 0) 
+        {
+
+            Destroy(gameObject);
+
+        
+        }
+        durabilityText.SetText(durability.ToString());
     }
     void canWeAttack()
     {
@@ -59,6 +74,23 @@ public class Melee_Handler : MonoBehaviour
         if(other.tag == "Enemy")
         {
             Debug.Log("Hit");
+            durability -= 1;
+        }
+
+        if(other.tag == "Breakable") 
+        {
+
+            Debug.Log("Hit Obj");
+
+            durability -= 1;
+          var ObjHealth = other.GetComponent<objectHealth>();
+
+            ObjHealth.takeDamage(DamageOnHit);
+
+
+
+
         }
     }
+    
 }
