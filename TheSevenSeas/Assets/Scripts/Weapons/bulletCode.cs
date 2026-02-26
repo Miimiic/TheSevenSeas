@@ -2,10 +2,10 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class bulletCode : MonoBehaviour
 {
-    public int timeForBulletToDespawn;
-    public float damage;
+    public float timeForBulletToDespawn;
+    public float bulletDamage;
     private void Awake()
     {
         StartCoroutine(waiter());

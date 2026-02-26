@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            float damage = other.GetComponent<Bullet>().damage;
+            float damage = other.GetComponent<bulletCode>().bulletDamage;
             TakeDamage(damage);
         }
     }
