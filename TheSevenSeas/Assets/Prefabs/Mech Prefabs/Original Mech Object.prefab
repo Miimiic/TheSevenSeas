@@ -6723,7 +6723,7 @@ GameObject:
   - component: {fileID: 3611612732280103977}
   - component: {fileID: 7865304859226357895}
   m_Layer: 0
-  m_Name: Mech Object
+  m_Name: Original Mech Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
