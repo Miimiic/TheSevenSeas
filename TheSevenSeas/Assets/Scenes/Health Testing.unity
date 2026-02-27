@@ -232,18 +232,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 7711446549689048410, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7711446549689048410, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 8677649850146341334, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
-      propertyPath: m_TagString
-      value: Mech
-      objectReference: {fileID: 0}
+    - target: {fileID: 5734804194129187310, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
+      propertyPath: mechHealthUISquare
+      value: 
+      objectReference: {fileID: 557340422}
+    - target: {fileID: 5734804194129187310, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
+      propertyPath: mechShieldUISquare
+      value: 
+      objectReference: {fileID: 2085585608}
     - target: {fileID: 8833542767624000541, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
       propertyPath: player
       value: 
@@ -267,10 +263,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8677649850146341334, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1851184923}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
 --- !u!20 &178009276 stripped
 Camera:
@@ -846,6 +839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9de5b0326302a4db108e279fa5131e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageNumber: 0
 --- !u!65 &553912350
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2063,32 +2057,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1851184916 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8677649850146341334, guid: 49e7b4d68056a7c46abcce95ca8bcd0a, type: 3}
-  m_PrefabInstance: {fileID: 129188834}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1851184923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851184916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b301d9d9551bb3a4bb4e1286b8b10970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mechCurrentHealth: 0
-  mechMaxHealth: 0
-  shieldCurrentHealth: 0
-  shieldMaxHealth: 0
-  mechHealthUISquare: {fileID: 557340422}
-  mechShieldUISquare: {fileID: 2085585608}
-  timeSinceDamage: 0
-  invincibility: 0
-  shieldsRegenning: 0
 --- !u!1 &2003002777
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,6 +2178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9de5b0326302a4db108e279fa5131e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageNumber: 250
 --- !u!114 &2053156594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4809396733993251100, guid: 2a775a954d23ad64ead2bf029040eb6f, type: 3}

@@ -27335,6 +27335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8044976004930217883}
+  - component: {fileID: 984297798885468746}
   m_Layer: 0
   m_Name: BT-2187
   m_TagString: Untagged
@@ -27362,6 +27363,27 @@ Transform:
   - {fileID: 5468583761640853760}
   m_Father: {fileID: 8145240817673519751}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!65 &984297798885468746
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981042537934449118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9331462, y: 4.5385776, z: 1.1445559}
+  m_Center: {x: 0.022247314, y: 2.2712808, z: -0.07227774}
 --- !u!1 &7984005827795534546
 GameObject:
   m_ObjectHideFlags: 0
@@ -29613,13 +29635,15 @@ GameObject:
   m_Component:
   - component: {fileID: 8145240817673519751}
   - component: {fileID: 6496784193024647983}
-  - component: {fileID: 7711446549689048410}
   - component: {fileID: 4155777497862166428}
   - component: {fileID: 8833542767624000541}
   - component: {fileID: 1137264114028345341}
+  - component: {fileID: 5734804194129187310}
+  - component: {fileID: 3210702655968989221}
+  - component: {fileID: 573662535280434424}
   m_Layer: 0
   m_Name: Mech Object
-  m_TagString: Untagged
+  m_TagString: Mech
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29665,27 +29689,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &7711446549689048410
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8677649850146341334}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 479
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 447
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.1514912, y: 6.929539, z: 1.4837646}
-  m_Center: {x: -0.024937391, y: 0.6323068, z: -0.00970459}
 --- !u!54 &4155777497862166428
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29728,12 +29731,14 @@ MonoBehaviour:
   player: {fileID: 0}
   playerController: {fileID: 0}
   mainPlayerCamera: {fileID: 0}
+  playerHealthUIObject: {fileID: 0}
   mechModel: {fileID: 7981042537934449118}
   mechMovement: {fileID: 1137264114028345341}
   mechCamera: {fileID: 1154087856143516431}
   mechExitArea: {fileID: 4906579842919247407}
   headlight: {fileID: 305416532059306818}
   cockpitOverlay: {fileID: 5209430114828288204}
+  mechUIObject: {fileID: 0}
   screenParent: {fileID: 3924803648178523318}
   screenList: []
   isInMech: 0
@@ -29763,6 +29768,74 @@ MonoBehaviour:
   cameraTransform: {fileID: 645833564099428911}
   groundCheckPoint: {fileID: 8661694346957774681}
   groundCheckRadius: 0.3
+--- !u!114 &5734804194129187310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8677649850146341334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b301d9d9551bb3a4bb4e1286b8b10970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mechCurrentHealth: 0
+  mechMaxHealth: 0
+  shieldCurrentHealth: 0
+  shieldMaxHealth: 0
+  mechHealthUISquare: {fileID: 0}
+  mechShieldUISquare: {fileID: 0}
+  timeSinceDamage: 0
+  invincibility: 0
+  shieldsRegenning: 0
+  shieldRegenLockoutTime: 0
+--- !u!136 &3210702655968989221
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8677649850146341334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.0982482
+  m_Height: 6.5977864
+  m_Direction: 1
+  m_Center: {x: -0.050987244, y: 0.4653976, z: 0}
+--- !u!136 &573662535280434424
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8677649850146341334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.46
+  m_Height: 6.5977864
+  m_Direction: 1
+  m_Center: {x: -0.050987244, y: 0.4653976, z: 0}
 --- !u!1 &8745554168922563367
 GameObject:
   m_ObjectHideFlags: 0

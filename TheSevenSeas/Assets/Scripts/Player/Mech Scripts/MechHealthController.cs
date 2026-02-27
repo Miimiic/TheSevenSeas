@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class MechHealthController : MonoBehaviour
 {
     [Header("Health Values")]
-    [SerializeField] private int mechCurrentHealth;
-    [SerializeField] private int mechMaxHealth;
+    [SerializeField] private float mechCurrentHealth;
+    [SerializeField] private float mechMaxHealth;
 
-    [SerializeField] private int shieldCurrentHealth;
-    [SerializeField] private int shieldMaxHealth;
+    [SerializeField] private float shieldCurrentHealth;
+    [SerializeField] private float shieldMaxHealth;
 
     [Header("Components")]
     [SerializeField] private RawImage mechHealthUISquare;
@@ -19,42 +19,48 @@ public class MechHealthController : MonoBehaviour
     [SerializeField] private float timeSinceDamage;
     [SerializeField] private bool invincibility;
     [SerializeField] private bool shieldsRegenning;
+    [SerializeField] private float shieldRegenLockoutTime;
+
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        mechMaxHealth = 100;
-        mechCurrentHealth = 100;
-        shieldCurrentHealth = 100;
-        shieldMaxHealth = 100;  
+        mechMaxHealth = 1000;
+        shieldMaxHealth = 500;
+
+        mechCurrentHealth = mechMaxHealth;
+        shieldCurrentHealth = shieldMaxHealth;
+
         shieldsRegenning = false;
+        shieldRegenLockoutTime = 5;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timeSinceDamage < 10)
+        if (timeSinceDamage <= shieldRegenLockoutTime)
         {
             timeSinceDamage += Time.deltaTime;
         }
-        if(timeSinceDamage>=10 && !shieldsRegenning && shieldCurrentHealth!=shieldMaxHealth)
+        if(timeSinceDamage>=shieldRegenLockoutTime && !shieldsRegenning && shieldCurrentHealth!=shieldMaxHealth)
         {
             StartCoroutine(PassiveHeal(5));
         }
-
-        HandleUIElements();
     }
 
 
     void HandleUIElements()
     {
-        mechShieldUISquare.rectTransform.localPosition = new Vector3(shieldCurrentHealth - 100, 0, 0);
-        mechHealthUISquare.rectTransform.localPosition = new Vector3 (mechCurrentHealth - 100,0,0);
+
+
+        mechShieldUISquare.rectTransform.localPosition = new Vector3(ReturnPercent(shieldCurrentHealth,shieldMaxHealth)-100, 0, 0);
+        mechHealthUISquare.rectTransform.localPosition = new Vector3 (ReturnPercent(mechCurrentHealth,mechMaxHealth) - 100,0,0);
     }
 
     public void Damage(int damage)
     {
-
         if (!invincibility)
         {
             StartCoroutine(InvincibiltyTimer(0.5f));
@@ -97,6 +103,16 @@ public class MechHealthController : MonoBehaviour
 
     }
 
+    private float ReturnPercent(float part, float whole)
+    {
+        // Seriously... Do not ask why, but C# has gaslit me into thinking these need to be seperate lines, you cant use brackets to make them work as one statement or it will always return 0 for some reason ???
+        // Also the 2 input variables must be floats aswell for some reason despite that only the variable holding the result should need to be a float
+
+        float temp = part/whole;
+        return temp*100;
+    }
+
+
 
 
     IEnumerator InvincibiltyTimer(float invincibilitySeconds)
@@ -113,10 +129,15 @@ public class MechHealthController : MonoBehaviour
         shieldsRegenning = true;
 
         // Check timeSinceDamage here aswell to make sure it can stop if taking damage mid-heal
-        while (shieldCurrentHealth < shieldMaxHealth && timeSinceDamage >= 7f)
+        while (shieldCurrentHealth < shieldMaxHealth && timeSinceDamage >= shieldRegenLockoutTime)
         {
-            shieldCurrentHealth+= passiveHealAmount;
-            yield return new WaitForSeconds(0.3f);
+            shieldCurrentHealth += passiveHealAmount;
+            if(shieldCurrentHealth > shieldMaxHealth)
+            {
+                shieldCurrentHealth = shieldMaxHealth;
+            }
+            yield return new WaitForSeconds(0.05f);
+            HandleUIElements();
         }
 
         shieldsRegenning = false;
