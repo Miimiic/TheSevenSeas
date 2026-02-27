@@ -20,5 +20,9 @@ public class TestDamageCube : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerHealthController>().Damage(damageNumber);
         }
+        else if(other.gameObject.tag =="Mech")
+        {
+            other.gameObject.GetComponent<MechHealthController>().Damage(damageNumber);
+        }
     }
 }

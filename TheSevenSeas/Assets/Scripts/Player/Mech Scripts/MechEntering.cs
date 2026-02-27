@@ -10,8 +10,10 @@ public class MechEntering : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Camera mainPlayerCamera;
+    [SerializeField] private GameObject playerHealthUIObject;
 
     [Header("Mech Components")]
+    [SerializeField] private GameObject mechModel;
     [SerializeField] private PlayerController mechMovement;
     [SerializeField] private Camera mechCamera;
     [SerializeField] private GameObject mechExitArea;
@@ -19,8 +21,10 @@ public class MechEntering : MonoBehaviour
     [SerializeField] private GameObject cockpitOverlay;
 
     [Header("Cockpit Components")]
+    [SerializeField] private GameObject mechUIObject;
     [SerializeField] private GameObject screenParent;
     [SerializeField] private List<GameObject> screenList = new List<GameObject>();
+
 
 
 
@@ -71,6 +75,10 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = false;
             mechMovement.enabled = false;
             headlight.enabled = false;
+            mechModel.gameObject.SetActive(true);
+
+            playerHealthUIObject.SetActive(true);
+            mechUIObject.SetActive(false);
 
             foreach (GameObject screen in screenList)
             {
@@ -99,6 +107,10 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = true;
             mechMovement.enabled = true;
             headlight.enabled = true;
+            mechModel.gameObject.SetActive(false);
+
+            playerHealthUIObject.SetActive(false);
+            mechUIObject.gameObject.SetActive(true);
 
             cockpitOverlay.SetActive(true);
 
@@ -112,6 +124,10 @@ public class MechEntering : MonoBehaviour
             StartCoroutine(BeginBootUpSequence());
         }
     }  
+
+
+
+
 
     IEnumerator BeginBootUpSequence()
     {
