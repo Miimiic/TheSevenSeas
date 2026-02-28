@@ -132,13 +132,13 @@ public class MechEntering : MonoBehaviour
     IEnumerator BeginBootUpSequence()
     {
         // Wait before starting
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
 
         // Iterate through each screen section and activate them
         foreach (GameObject screen in screenList)
         {
             screen.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         Debug.Log("Bootup Finished");
         yield break;
