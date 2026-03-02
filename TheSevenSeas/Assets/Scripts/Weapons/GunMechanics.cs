@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GunMechanics : MonoBehaviour
 {
@@ -11,28 +12,44 @@ public class GunMechanics : MonoBehaviour
     [SerializeField] private bool FullAuto, raycast;//Self explanitory
     [SerializeField] private float timeBetweenShooting,spread,reloadTime,timeBetweenShots,range;//Self explanitory
      bool shooting,readyToShoot,reloading, playedEmptySound;
-    [SerializeField] private int magSize, bulletsPerTap;
+    [SerializeField] private int magSize , bulletsPerTap;
     int bulletsLeft, bulletsShot;
     public TextMeshProUGUI text;
     public AudioClip reloadAudio,shootAudio,emptyMagAudio;
     public AudioSource gunSource;
     public Camera fpsCam;
-    public Transform attackpoint;
+    public Transform muzzleLocation;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
     
 
     private void Update()
     {
+
+        if (text == null)
+        {
+            text = GameObject.FindGameObjectWithTag("AmmoCounter").GetComponent<TextMeshProUGUI>();
+
+        }
+        if (fpsCam == null)
+        {
+            fpsCam = Camera.main;
+
+        }
+        if (gunSource == null)
+        {
+            gunSource = gameObject.GetComponent<AudioSource>();
+        }
         takeInput();
         text.SetText(bulletsLeft + " / " + magSize);
+        
     }
     private void Start()
     {
         bulletsLeft = magSize;
         readyToShoot = true;
     }
-
+    
     void takeInput()
     {
         if (!FullAuto)
@@ -105,7 +122,7 @@ public class GunMechanics : MonoBehaviour
             }
             Instantiate(bulletHole, rayHit.point, Quaternion.Euler(0, 180, 0));
         }
-        Instantiate(muzzleFlash, attackpoint.position,Quaternion.identity);
+        Instantiate(muzzleFlash, muzzleLocation.position,Quaternion.identity);
         bulletsLeft--;
         bulletsShot--;
         Invoke("resetReady", timeBetweenShooting);
