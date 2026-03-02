@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Bullet
   - Breakable
+  - AmmoCounter
   layers:
   - Default
   - TransparentFX

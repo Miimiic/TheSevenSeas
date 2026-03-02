@@ -1,2 +1,22 @@
 fileFormatVersion: 2
 guid: 7eaed73ce24c4a84ea04675559cba5a5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - AmmoType: {fileID: 5470174094129287137, guid: 2d9fe5c1fd6c88a40b15c8bf624b47b1, type: 3}
+  - Barrel: {instanceID: 0}
+  - muzzleFlash: {fileID: 25014472757442730, guid: a77196e8427d7a547a7a06056e3fe791, type: 3}
+  - bulletHole: {fileID: 3485263468055717485, guid: 9201436fccef34b41b327954d79be743, type: 3}
+  - text: {instanceID: 0}
+  - reloadAudio: {instanceID: 0}
+  - shootAudio: {fileID: 8300000, guid: 356dfc85b8b167d4f8269d55555713bc, type: 3}
+  - emptyMagAudio: {instanceID: 0}
+  - gunSource: {instanceID: 0}
+  - fpsCam: {instanceID: 0}
+  - attackpoint: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
