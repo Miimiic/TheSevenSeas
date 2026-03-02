@@ -788,6 +788,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1351910302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1351910304}
+  - component: {fileID: 1351910303}
+  m_Layer: 0
+  m_Name: GrenadeHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1351910303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351910302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973f4d7a9b27e6b4cba100c68810a23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NailBomb: {fileID: 630755356050023090, guid: 24e7222cecae9534c83950c6f876e6d4, type: 3}
+  grenadesLeft: 10
+--- !u!4 &1351910304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351910302}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.22800016, y: -0.16499996, z: 1.003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 899372495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1638792569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3289252604311404394, guid: e8fff8ddef616e041831c81caef00921, type: 3}
@@ -1001,6 +1047,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1299534325949950826, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1974670377}
+    - targetCorrespondingSourceObject: {fileID: 1299534325949950826, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1351910304}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6921817462840612580, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
       insertIndex: -1
