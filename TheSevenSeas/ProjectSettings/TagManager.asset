@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Breakable
   - AmmoCounter
+  - Mech
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - AlwaysRenderOnTop
+  - MechIgnoreRendering
   - 
   - 
   - 

@@ -16,6 +16,12 @@ public class PlayerHealthController : MonoBehaviour
     [SerializeField] private int playerCurrentHealth;
     [SerializeField] private int playerMaxHealth;
 
+    [Header("Armour Values")]
+    [SerializeField] int playerArmourLevel;
+    [SerializeField] int playerArmourDamageReduction;
+    [SerializeField] int armourDamageReductionScalar;
+    // This is what will be multiplied by the armour level to get the damage reduction
+
     [Header("Passive Heal Values")]
     [SerializeField] private bool isPassiveHealing;
     [SerializeField] private bool isInPassiveHealZone;
@@ -26,13 +32,27 @@ public class PlayerHealthController : MonoBehaviour
 
 
 
+    public static PlayerHealthController Instance;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerCurrentHealth = 50;
+
+        // Incase the instance was not set to this, Set it to this script, if it is already set to something, KILL THIS OBJECT, IT SHOULD NOT BE ABLE TO EXIST
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Debug.Log("Destroying gameObject due to multiple instances of the singleton PlayerHealthController class. Please make sure you havent spawned multiple players.");
+            Destroy(gameObject);
+        }
+
+        armourDamageReductionScalar = 30;
+        playerCurrentHealth = 100;
         playerMaxHealth = 100;
         invincibility = false;
         isPassiveHealing = false;
+
 
         // Handle it once on start
         HandleHealthText();
@@ -75,9 +95,20 @@ public class PlayerHealthController : MonoBehaviour
         // Check for I-Frames
         if (!invincibility)
         {
-            StartCoroutine(InvincibiltyTimer(0.5f));
+            // Make sure the armour is up to date before doing any damage calculations
+            HandlePlayerArmour();
 
-            playerCurrentHealth -= damageNumber;
+            StartCoroutine(InvincibiltyTimer(0.5f));
+            if (damageNumber-playerArmourDamageReduction>0)
+            {
+                playerCurrentHealth -= (damageNumber - playerArmourDamageReduction);
+                Debug.Log("Damaging player for " + (damageNumber - playerArmourDamageReduction));
+            }
+            else
+            {
+                Debug.Log("Player Armour nullified the attack");
+            }
+
             timeSinceDamage = 0;
 
             CheckForDeath();
@@ -114,6 +145,16 @@ public class PlayerHealthController : MonoBehaviour
         return playerMaxHealth;
     }
 
+    public int GetArmourLevel()
+    {
+        return playerArmourLevel;
+    }
+
+    public int GetArmourReduction()
+    {
+        return playerArmourDamageReduction;
+    }
+
     public void SetCurrentHealth(int newHealth)
     {
         playerCurrentHealth = newHealth;
@@ -129,9 +170,20 @@ public class PlayerHealthController : MonoBehaviour
         HandleHealthText();
     }
 
+    public void SetArmourLevel(int newArmourLevel)
+    {
+        playerArmourLevel = newArmourLevel;
+        HandlePlayerArmour();
+    }
+
     public void SetPassiveHealZone(bool newZone)
     {
         isInPassiveHealZone = newZone;
+    }
+
+    public void HandlePlayerArmour()
+    {
+        playerArmourDamageReduction = playerArmourLevel * armourDamageReductionScalar;
     }
 
     public void TriggerInvincibility(float seconds)

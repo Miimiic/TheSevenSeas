@@ -5,13 +5,12 @@ using UnityEngine;
 public class TestDamageCube : MonoBehaviour
 {
     private Collider itemCollider;
-    private int damageNumber;
+    [SerializeField] private int damageNumber;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         itemCollider = GetComponent<Collider>();
-        damageNumber = 25;
     }
 
     private void OnTriggerStay(Collider other)
@@ -19,6 +18,10 @@ public class TestDamageCube : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<PlayerHealthController>().Damage(damageNumber);
+        }
+        else if(other.gameObject.tag =="Mech")
+        {
+            other.gameObject.GetComponent<MechHealthController>().Damage(damageNumber);
         }
     }
 }
