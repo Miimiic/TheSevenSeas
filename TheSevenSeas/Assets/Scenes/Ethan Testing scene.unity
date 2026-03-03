@@ -817,8 +817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973f4d7a9b27e6b4cba100c68810a23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NailBomb: {fileID: 630755356050023090, guid: 24e7222cecae9534c83950c6f876e6d4, type: 3}
-  grenadesLeft: 10
+  cam: {fileID: 899372495}
+  attackPT: {fileID: 1351910304}
+  NailBomb: {fileID: 2013906135949775987, guid: 646fd31b8dd183847b42e4420b32bc79, type: 3}
+  GrenadesLeft: 5
+  throwKey: 103
+  cooldownOnThrow: 0.5
+  throwForce: 10
+  throwHeight: 10
 --- !u!4 &1351910304
 Transform:
   m_ObjectHideFlags: 0
@@ -1067,7 +1073,7 @@ GameObject:
   - component: {fileID: 2042609578}
   - component: {fileID: 2042609577}
   m_Layer: 5
-  m_Name: Image
+  m_Name: crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

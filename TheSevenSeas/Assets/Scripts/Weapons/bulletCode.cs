@@ -6,6 +6,7 @@ public class bulletCode : MonoBehaviour
 {
     public float timeForBulletToDespawn;
     public float bulletDamage;
+ 
     private void Awake()
     {
         StartCoroutine(waiter());
@@ -17,4 +18,5 @@ public class bulletCode : MonoBehaviour
         Object.Destroy(this.gameObject);
     
     }
+    
 }
