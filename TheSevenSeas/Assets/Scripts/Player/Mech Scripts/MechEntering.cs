@@ -14,7 +14,9 @@ public class MechEntering : MonoBehaviour
 
     [Header("Mech Components")]
     [SerializeField] private GameObject mechModel;
-    [SerializeField] private PlayerController mechMovement;
+    [SerializeField] private MechMovementController mechMovement;
+    [SerializeField] private MechAbilityController mechAbility;
+    [SerializeField] private MechHealthController mechHealth;
     [SerializeField] private Camera mechCamera;
     [SerializeField] private GameObject mechExitArea;
     [SerializeField] private Light headlight;
@@ -75,6 +77,8 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = false;
             mechMovement.enabled = false;
             headlight.enabled = false;
+            mechHealth.enabled = false;
+            mechAbility.enabled = false;
             mechModel.gameObject.SetActive(true);
 
             playerHealthUIObject.SetActive(true);
@@ -107,6 +111,8 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = true;
             mechMovement.enabled = true;
             headlight.enabled = true;
+            mechHealth.enabled = true;
+            mechAbility.enabled = true;
             mechModel.gameObject.SetActive(false);
 
             playerHealthUIObject.SetActive(false);
