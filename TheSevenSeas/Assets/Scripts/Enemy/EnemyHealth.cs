@@ -10,11 +10,11 @@ public class EnemyHealth : MonoBehaviour
         health = maxHealth;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            float damage = other.GetComponent<bulletCode>().bulletDamage;
+            float damage = other.gameObject.GetComponent<bulletCode>().bulletDamage;
             TakeDamage(damage);
         }
     }
