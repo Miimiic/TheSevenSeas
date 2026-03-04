@@ -390,9 +390,9 @@ GameObject:
   - component: {fileID: 1791310458717791318}
   - component: {fileID: 7527413281214239806}
   - component: {fileID: 3430265552268999219}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,7 +423,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6921817462840612580}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -484,12 +484,14 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  flashlight: {fileID: 0}
   mouseSensitivity: 10
   smoothMouse: 1
   smoothing: 18
   cameraTransform: {fileID: 1299534325949950826}
   groundCheckPoint: {fileID: 1857035556388179997}
   groundCheckRadius: 0.3
+  buildModeKey: 98
 --- !u!114 &7527413281214239806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,8 +526,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guiHealthText: {fileID: 0}
-  playerCurrentHealth: 0
-  playerMaxHealth: 0
+  playerCurrentHealth: 10
+  playerMaxHealth: 10
   isPassiveHealing: 0
   isInPassiveHealZone: 0
   timeSinceDamage: 0
