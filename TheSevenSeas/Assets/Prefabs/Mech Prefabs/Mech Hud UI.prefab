@@ -476,12 +476,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6758405725917246990}
   m_Layer: 5
-  m_Name: Mech Hud UI V3
+  m_Name: Mech Hud UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6758405725917246990
 RectTransform:
   m_ObjectHideFlags: 0
