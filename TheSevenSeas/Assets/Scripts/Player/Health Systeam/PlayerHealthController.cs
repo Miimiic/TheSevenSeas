@@ -40,7 +40,9 @@ public class PlayerHealthController : MonoBehaviour
 
         // Incase the instance was not set to this, Set it to this script, if it is already set to something, KILL THIS OBJECT, IT SHOULD NOT BE ABLE TO EXIST
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
         {
             Debug.Log("Destroying gameObject due to multiple instances of the singleton PlayerHealthController class. Please make sure you havent spawned multiple players.");
