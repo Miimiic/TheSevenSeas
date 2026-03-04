@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class explosives : MonoBehaviour
@@ -6,6 +7,7 @@ public class explosives : MonoBehaviour
     public Animator animator;
     public bool explodeWithTimer;
     public float explosionTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -20,7 +22,7 @@ public class explosives : MonoBehaviour
     {
 
         animator.Play("explosion");
-    
+        
     
     }
     private void OnTriggerEnter(Collider other)
@@ -32,5 +34,12 @@ public class explosives : MonoBehaviour
         
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        explode();
+    }
+    public void destroyAfterAnim()
+    {
+        Destroy(gameObject);
+    }
 }

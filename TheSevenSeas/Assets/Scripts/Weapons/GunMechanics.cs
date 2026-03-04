@@ -111,7 +111,8 @@ public class GunMechanics : MonoBehaviour
         {
             Rigidbody justShotRB;
             justShotRB = Instantiate(AmmoType, Barrel.transform.position, Quaternion.identity);
-            justShotRB.linearVelocity = transform.TransformDirection(Vector3.forward * BulletSpeed);
+            Vector3 Force = fpsCam.transform.forward * BulletSpeed ;
+            justShotRB.AddForce(Force, ForceMode.Impulse);
         }
         if (raycast)
         {
