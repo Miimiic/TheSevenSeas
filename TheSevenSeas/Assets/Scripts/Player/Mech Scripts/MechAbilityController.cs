@@ -57,7 +57,7 @@ public class MechAbilityController : MonoBehaviour
 
     private void Dash()
     {
-        if (canDash)
+        if (canDash&&mechRigidBody.linearVelocity!= new Vector3 (0,0,0))
         {
             if (dashNum > 0)
             {

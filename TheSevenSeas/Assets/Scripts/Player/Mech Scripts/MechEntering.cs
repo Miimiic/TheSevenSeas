@@ -59,7 +59,19 @@ public class MechEntering : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.E))
         {
-            ToggleMechState();
+            if  (!mechHealth.IsTitanDead())
+            {
+                if (isInMech)
+                {
+                    ToggleMechState();
+                }
+
+                else if (Vector3.Distance(player.transform.position, mechModel.transform.position) < 7)
+                {
+                    ToggleMechState();
+                }
+
+            }
         }
     }
 
@@ -67,7 +79,7 @@ public class MechEntering : MonoBehaviour
 
 
     // Switches the player from Player to Mech control and Vice Versa
-    void ToggleMechState()
+    public void ToggleMechState()
     {
         if (isInMech)
         {
@@ -77,7 +89,6 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = false;
             mechMovement.enabled = false;
             headlight.enabled = false;
-            mechHealth.enabled = false;
             mechAbility.enabled = false;
             mechModel.gameObject.SetActive(true);
 
@@ -111,7 +122,6 @@ public class MechEntering : MonoBehaviour
             mechCamera.enabled = true;
             mechMovement.enabled = true;
             headlight.enabled = true;
-            mechHealth.enabled = true;
             mechAbility.enabled = true;
             mechModel.gameObject.SetActive(false);
 
@@ -131,7 +141,10 @@ public class MechEntering : MonoBehaviour
         }
     }  
 
-
+    public bool GetMechState()
+    {
+        return isInMech;
+    }
 
 
 
