@@ -1794,7 +1794,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2062833043}
         m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
         m_MethodName: ButtonClick
         m_Mode: 1
@@ -1858,13 +1858,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonNo: 0
   textList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  nameList: []
-  damageList: []
-  speedList: []
+  - {fileID: 728051195}
+  - {fileID: 31147295}
+  - {fileID: 1170419530}
+  nameList:
+  - Gun1
+  - Gun2
+  - Gun3
+  damageList:
+  - 1
+  - 2
+  - 3
+  speedList:
+  - 1
+  - 2
+  - 3
 --- !u!1 &1797285179
 GameObject:
   m_ObjectHideFlags: 0
