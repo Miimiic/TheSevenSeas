@@ -10,7 +10,7 @@ public class CraftingSystem : MonoBehaviour
     public List<TextMeshProUGUI> textList;
     public string type;
     public int damage;
-    public int speed;
+    public float speed;
     public int wood;
     public int brick;
     public int metal;
@@ -26,16 +26,16 @@ public class CraftingSystem : MonoBehaviour
     }
 
     public void ButtonClick () {
-        //Update the text
+        //Update the text-Not necessarily the final stat types/values
         textList[0].text = "Name: "+ type;
         textList[1].text = "Damage: "+damage;
         textList[2].text = "Speed: "+speed;
-        textList[3].text = "-x " + wood;
-        textList[4].text = "-x " + brick;
-        textList[5].text = "-x " + metal;
-        textList[6].text = "-x " + nails;
-        textList[7].text = "-x " + pipes;
-        textList[8].text = "-x " + manuals;
+        textList[3].text = "-" + wood+ " wood";
+        textList[4].text = "-" + brick+ " brick";
+        textList[5].text = "-" + metal+ " metal";
+        textList[6].text = "-" + nails+ " nails";
+        textList[7].text = "-" + pipes+ " pipes";
+        textList[8].text = "-" + manuals+ " manuals";
 
 
     }
