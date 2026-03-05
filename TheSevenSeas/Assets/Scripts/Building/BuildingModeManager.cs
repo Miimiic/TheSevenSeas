@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class BuildingModeManager : MonoBehaviour
 {
     [Header("UI References")]
@@ -11,10 +10,15 @@ public class BuildingModeManager : MonoBehaviour
     [Header("Camera")]
     public PlayerController playerController;
     
-    [Header("Player Controls (Optional)")]
-    public MonoBehaviour[] playerScriptsToDisable;
+    [Header("Player Controls")]
+    [Tooltip("Disabled while menu is open, re-enabled when menu closes (e.g. movement, look)")]
+    public MonoBehaviour[] menuOnlyDisabledScripts;
+
+    [Tooltip("Disabled when entering build mode, only re-enabled when exiting build mode (e.g. gun, shooting)")]
+    public MonoBehaviour[] buildModeDisabledScripts;
     
     private bool isBuildingModeActive = false;
+    private bool wasInBuildModeLastFrame = false;
     
     void Start()
     {
@@ -28,10 +32,26 @@ public class BuildingModeManager : MonoBehaviour
     
     void Update()
     {
+        bool isInBuildMode = playerController != null && playerController.IsBuildMode();
+
+        // Detect when player enters build mode
+        if (!wasInBuildModeLastFrame && isInBuildMode)
+        {
+            SetScriptsEnabled(buildModeDisabledScripts, false);
+        }
+
+        // Detect when player exits build mode (B pressed to leave)
+        if (wasInBuildModeLastFrame && !isInBuildMode)
+        {
+            SetScriptsEnabled(buildModeDisabledScripts, true);
+            SetScriptsEnabled(menuOnlyDisabledScripts, true);
+        }
+        wasInBuildModeLastFrame = isInBuildMode;
+
         // Toggle building menu with 'M' key (only when in build mode)
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (playerController != null && playerController.IsBuildMode())
+            if (isInBuildMode)
             {
                 ToggleBuildingMenu();
             }
@@ -41,10 +61,8 @@ public class BuildingModeManager : MonoBehaviour
             }
         }
         
-        // When player enters build mode (B pressed)
-        if (playerController != null && playerController.IsBuildMode())
+        if (isInBuildMode)
         {
-            // If grid was disabled and menu is not open, enable grid
             if (gridSystem != null && !gridSystem.isActiveAndEnabled && !isBuildingModeActive)
             {
                 gridSystem.SetEnabled(true);
@@ -52,7 +70,6 @@ public class BuildingModeManager : MonoBehaviour
         }
         else
         {
-            // If player exits build mode, close the UI and grid
             if (isBuildingModeActive)
             {
                 buildingUI.SetActive(false);
@@ -72,33 +89,27 @@ public class BuildingModeManager : MonoBehaviour
         isBuildingModeActive = !isBuildingModeActive;
         buildingUI.SetActive(isBuildingModeActive);
         
-        // When menu opens, show cursor and disable grid
-        // When menu closes, hide cursor and enable grid
         if (isBuildingModeActive)
         {
-            // Show cursor for UI interaction
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             
-            // Disable grid while browsing menu
             if (gridSystem != null)
-            {
                 gridSystem.SetEnabled(false);
-            }
             
-            SetPlayerControlsEnabled(false);
+            // Disable movement/look while menu is open
+            SetScriptsEnabled(menuOnlyDisabledScripts, false);
         }
         else
         {
-            // Hide cursor and re-enable grid for placement
             RestoreCursorForGameplay();
             
             if (gridSystem != null && playerController != null && playerController.IsBuildMode())
-            {
                 gridSystem.SetEnabled(true);
-            }
             
-            SetPlayerControlsEnabled(true);
+            // Re-enable movement/look when menu closes (still in build mode)
+            SetScriptsEnabled(menuOnlyDisabledScripts, true);
+            // buildModeDisabledScripts stay OFF until player exits build mode
         }
     }
     
@@ -116,31 +127,25 @@ public class BuildingModeManager : MonoBehaviour
             gridSystem.CreateGhostObject();
         }
         
-        // Close the UI
         buildingUI.SetActive(false);
         isBuildingModeActive = false;
         
-        // Restore cursor for gameplay (locked)
         RestoreCursorForGameplay();
         
-        // Enable grid system if we're in build mode
         if (gridSystem != null && playerController != null && playerController.IsBuildMode())
-        {
             gridSystem.SetEnabled(true);
-        }
         
-        // Re-enable player controls
-        SetPlayerControlsEnabled(true);
+        // Re-enable movement/look after selecting (still in build mode)
+        SetScriptsEnabled(menuOnlyDisabledScripts, true);
+        // buildModeDisabledScripts stay OFF until player exits build mode
     }
     
-    void SetPlayerControlsEnabled(bool enabled)
+    void SetScriptsEnabled(MonoBehaviour[] scripts, bool enabled)
     {
-        foreach (var script in playerScriptsToDisable)
+        foreach (var script in scripts)
         {
             if (script != null)
-            {
                 script.enabled = enabled;
-            }
         }
     }
 }
