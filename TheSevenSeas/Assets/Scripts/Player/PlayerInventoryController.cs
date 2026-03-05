@@ -22,9 +22,6 @@ public class PlayerInventoryController : MonoBehaviour
     [SerializeField] private int workerFleshAmount;
     [SerializeField] private int eldritchHeartAmount;
 
-
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
