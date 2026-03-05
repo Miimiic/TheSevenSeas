@@ -1724,7 +1724,7 @@ GameObject:
   - component: {fileID: 1716372683}
   - component: {fileID: 1716372686}
   m_Layer: 5
-  m_Name: GunButton
+  m_Name: Gun1Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1856,23 +1856,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5c650d9cd5acb49aa02482f6340e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNo: 0
   textList:
   - {fileID: 728051195}
   - {fileID: 31147295}
   - {fileID: 1170419530}
-  nameList:
-  - Gun1
-  - Gun2
-  - Gun3
-  damageList:
-  - 1
-  - 2
-  - 3
-  speedList:
-  - 1
-  - 2
-  - 3
+  - {fileID: 1170419530}
+  - {fileID: 303584574}
+  - {fileID: 2090806236}
+  - {fileID: 1202116021}
+  - {fileID: 1258565404}
+  - {fileID: 845229179}
+  name: 
+  damage: 5
+  speed: 5
+  wood: 3
+  brick: 1
+  metal: 2
+  nails: 0
+  pipes: 0
+  manuals: 0
 --- !u!1 &1797285179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,11 +2055,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5c650d9cd5acb49aa02482f6340e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNo: 0
   textList: []
-  nameList: []
-  damageList: []
-  speedList: []
+  name: 
+  damage: 0
+  speed: 0
+  wood: 0
+  brick: 0
+  metal: 0
+  nails: 0
+  pipes: 0
+  manuals: 0
 --- !u!1 &2090806234
 GameObject:
   m_ObjectHideFlags: 0
