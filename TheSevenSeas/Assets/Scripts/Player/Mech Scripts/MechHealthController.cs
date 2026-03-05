@@ -286,6 +286,4 @@ public class MechHealthController : MonoBehaviour
             Debug.Log("Titan Landed");
         }
     }
-
-
 }
