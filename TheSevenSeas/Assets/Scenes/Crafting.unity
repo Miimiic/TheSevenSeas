@@ -1866,7 +1866,7 @@ MonoBehaviour:
   - {fileID: 1202116021}
   - {fileID: 1258565404}
   - {fileID: 845229179}
-  name: 
+  type: 
   damage: 5
   speed: 5
   wood: 3
@@ -2055,8 +2055,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5c650d9cd5acb49aa02482f6340e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textList: []
-  name: 
+  textList:
+  - {fileID: 728051195}
+  - {fileID: 31147295}
+  - {fileID: 1170419530}
+  - {fileID: 303584574}
+  - {fileID: 2090806236}
+  - {fileID: 1202116021}
+  - {fileID: 1258565404}
+  - {fileID: 701630209}
+  - {fileID: 845229179}
+  type: 
   damage: 0
   speed: 0
   wood: 0

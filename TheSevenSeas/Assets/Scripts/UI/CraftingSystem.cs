@@ -8,7 +8,7 @@ public class CraftingSystem : MonoBehaviour
 
     //Specific for each button
     public List<TextMeshProUGUI> textList;
-    public string name;
+    public string type;
     public int damage;
     public int speed;
     public int wood;
@@ -27,7 +27,7 @@ public class CraftingSystem : MonoBehaviour
 
     public void ButtonClick () {
         //Update the text
-        textList[0].text = "Name: "+name;
+        textList[0].text = "Name: "+ type;
         textList[1].text = "Damage: "+damage;
         textList[2].text = "Speed: "+speed;
         textList[3].text = "-x " + wood;
