@@ -8,6 +8,8 @@ public class MechEntering : MonoBehaviour
 {
     [Header("Player Components")]
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerModel;
+    [SerializeField] private Collider playerCollider;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Camera mainPlayerCamera;
     [SerializeField] private GameObject playerHealthUIObject;
@@ -95,23 +97,26 @@ public class MechEntering : MonoBehaviour
             playerHealthUIObject.SetActive(true);
             mechUIObject.SetActive(false);
 
-            foreach (GameObject screen in screenList)
-            {
-                screen.SetActive(true);
-            }
-
             cockpitOverlay.SetActive(false);
 
             playerController.enabled = true;
-            mainPlayerCamera.enabled = true;
+            mainPlayerCamera.gameObject.SetActive(true);
 
             isInMech = false;
 
-            player.SetActive(true);
+            playerModel.gameObject.SetActive(true);
+            playerCollider.enabled = true;
             player.transform.position = mechExitArea.transform.position;
             player.transform.rotation = mechExitArea.transform.rotation;
 
             Debug.Log("Exiting Mech");
+
+
+            // Re-"Disable" Screens
+            foreach (GameObject screen in screenList)
+            {
+                screen.SetActive(true);
+            }
         }
 
         else if (isInMech == false)
@@ -131,9 +136,10 @@ public class MechEntering : MonoBehaviour
             cockpitOverlay.SetActive(true);
 
             playerController.enabled = false;
-            mainPlayerCamera.enabled = false;
+            mainPlayerCamera.gameObject.SetActive(false);
 
-            player.SetActive(false);
+            playerModel.gameObject.SetActive(false);
+            playerCollider.enabled = false;
             isInMech = true;
             Debug.Log("Entering Mech");
 
