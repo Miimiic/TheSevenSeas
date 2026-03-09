@@ -274,6 +274,7 @@ public class MechHealthController : MonoBehaviour
         // Check to stop falling
         RaycastHit hit = new RaycastHit();
         Physics.Raycast(mechScriptObject.transform.position, -Vector3.up, out hit);
+        Debug.Log(hit.ToString());
         if (hit.distance < 6 && !hasSmoked)
         {
             hasSmoked = true;

@@ -8,6 +8,8 @@ public class MechMovementController : MonoBehaviour
     // Also I made it a singleton, VIVE LA SINGLETONS !!! (P.s. This is mainly because the MechAbilityController is gonna have to fiddle with some of these numbers and I can NOT be bothered doing the extra lines I did in my Craft project cause that was inneficient as Fuh)
 
     [Header("Movement")]
+    [SerializeField] private BoxCollider mechCrushCollider;
+    [SerializeField] private GameObject bloodSpray;
     public float moveSpeed = 5f;
     [SerializeField] private bool hasDashed = false;
 
@@ -98,8 +100,6 @@ public class MechMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-
-
         HandleMovement();
     }
 
@@ -207,6 +207,16 @@ public class MechMovementController : MonoBehaviour
         rb.angularDamping = 0.05f;
         hasDashed= false;
         yield break;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag=="Enemy")
+        {
+            // Annihilate anything, instantiate a blood spray
+            Instantiate(bloodSpray, other.transform.position,other.transform.rotation);
+            other.GetComponent<EnemyHealth>().TakeDamage(99999);
+        }
     }
 
 }

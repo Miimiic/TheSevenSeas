@@ -15,6 +15,7 @@ public class MechEntering : MonoBehaviour
     [SerializeField] private GameObject playerHealthUIObject;
 
     [Header("Mech Components")]
+    [SerializeField] private Collider mechFeet;
     [SerializeField] private GameObject mechModel;
     [SerializeField] private MechMovementController mechMovement;
     [SerializeField] private MechAbilityController mechAbility;
@@ -109,6 +110,8 @@ public class MechEntering : MonoBehaviour
             player.transform.position = mechExitArea.transform.position;
             player.transform.rotation = mechExitArea.transform.rotation;
 
+            mechFeet.enabled = false ;
+
             Debug.Log("Exiting Mech");
 
 
@@ -142,6 +145,8 @@ public class MechEntering : MonoBehaviour
             playerCollider.enabled = false;
             isInMech = true;
             Debug.Log("Entering Mech");
+
+            mechFeet.enabled = true;
 
             StartCoroutine(BeginBootUpSequence());
         }
