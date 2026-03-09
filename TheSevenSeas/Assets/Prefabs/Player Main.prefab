@@ -359,8 +359,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 953670294257506180}
   - {fileID: 790998569266782145}
+  - {fileID: 953670294257506180}
   - {fileID: 267689151017743852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -748,6 +748,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295
+  Raycastdamage: 0
 --- !u!82 &3481675657482075840
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine.LowLevel;
 
 public class EnemyAIController : MonoBehaviour
 {
     [Header("General")]
     public NavMeshAgent agent;
     public Transform player;
+    public Transform mech;
+    public Transform priorityTarget;
     public LayerMask whatIsGround, whatIsPlayer;
 
     [Header("Patrolling")]
@@ -40,15 +44,34 @@ public class EnemyAIController : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player Main").transform;
+        mech = GameObject.Find("Mech Object").transform;
+
         agent = GetComponent<NavMeshAgent>();
         enemyAttack = GetComponent<EnemyAttack>();
+
+        priorityTarget = player;
 
         agent.speed = patrolSpeed;
     }
 
     private void Update()
     {
+
+        // If you're wondering aidan... Honestly I dunno why I decided to do it like this, player.GetChild(1) is just the model for the player, so it checks if thats active... Now why I didnt make it a variable, I could not tell you
+        if (mech.gameObject.activeSelf && !player.GetChild(1).gameObject.activeSelf)
+        {
+            priorityTarget = mech;
+            viewAngle = 360;
+            viewDistance = 60;
+        }
+        else
+        {
+            priorityTarget = player;
+            viewAngle = 180;
+            viewDistance = 15;
+        }
+
         bool canCurrentlySeePlayer = CanSeePlayer();
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
@@ -129,7 +152,7 @@ public class EnemyAIController : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(priorityTarget.position);
     }
 
     private void AttackPlayer()
@@ -137,7 +160,7 @@ public class EnemyAIController : MonoBehaviour
         // Makes sure enemy doesn't move
         agent.SetDestination(transform.position);
         // Makes enemy look at player while ignoring y axis to prevent that weird tilting
-        Vector3 direction = (player.position - transform.position);
+        Vector3 direction = (priorityTarget.position - transform.position);
         direction.y = 0f;
         // Smoothly rotate towards the player
         Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -158,8 +181,8 @@ public class EnemyAIController : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Vector3 directionToPlayer = (priorityTarget.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, priorityTarget.position);
 
         // Check distance
         if (distanceToPlayer > viewDistance)
@@ -173,7 +196,7 @@ public class EnemyAIController : MonoBehaviour
         //Check line of sight
         if (Physics.Raycast(transform.position + Vector3.up * 1.5f, directionToPlayer, out RaycastHit hit, viewDistance))
         {
-            if (hit.transform == player)
+            if (hit.transform == priorityTarget)
                 return true;
         }
 

@@ -20,6 +20,10 @@ public class EnemyAttack : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerHealthController>().Damage(attackDamage);
         }
+        if (other.gameObject.tag == "Mech")
+        {
+            other.gameObject.GetComponent<MechHealthController>().Damage(attackDamage);
+        }
     }
 
     public void Attack()
