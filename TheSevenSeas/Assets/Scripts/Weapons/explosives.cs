@@ -25,13 +25,14 @@ public class explosives : MonoBehaviour
         
     
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "enemy") 
-        { 
-        
-            
-        
+        if(other.tag == "Enemy") 
+        {
+
+            var enemyHealth = other.GetComponent<EnemyHealth>();
+            enemyHealth.TakeDamage(damage);
+
         }
     }
     private void OnCollisionEnter(Collision collision)

@@ -17,6 +17,7 @@ public class EnemyHealth : MonoBehaviour
             float damage = other.gameObject.GetComponent<bulletCode>().bulletDamage;
             TakeDamage(damage);
         }
+        
     }
 
     public void TakeDamage(float damage)

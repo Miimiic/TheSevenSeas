@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   attackPT: {fileID: 5466220070408730353}
-  NailBomb: {fileID: 2013906135949775987, guid: 646fd31b8dd183847b42e4420b32bc79, type: 3}
+  NailBomb: {fileID: 1801219299593323119, guid: 1dfaa71ccd579a3498cdba51b4eb611e, type: 3}
   GrenadesLeft: 5
   throwKey: 103
   cooldownOnThrow: 0.5
