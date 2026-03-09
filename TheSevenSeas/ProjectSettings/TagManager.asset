@@ -9,6 +9,7 @@ TagManager:
   - Breakable
   - AmmoCounter
   - Mech
+  - sword
   layers:
   - Default
   - TransparentFX

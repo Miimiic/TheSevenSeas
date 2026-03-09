@@ -14,6 +14,7 @@ public class Melee_Handler : MonoBehaviour
     public Animator Animator;
     public int durability;
     public TextMeshProUGUI durabilityText;
+    
  
     
 
@@ -75,6 +76,8 @@ public class Melee_Handler : MonoBehaviour
         {
             Debug.Log("Hit");
             durability -= 1;
+            var enemyHealth = other.GetComponent<EnemyHealth>();
+            enemyHealth.TakeDamage(DamageOnHit);
         }
 
         if(other.tag == "Breakable") 
@@ -91,6 +94,7 @@ public class Melee_Handler : MonoBehaviour
 
 
         }
+       
     }
     
 }

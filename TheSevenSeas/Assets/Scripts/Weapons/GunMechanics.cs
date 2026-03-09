@@ -21,7 +21,7 @@ public class GunMechanics : MonoBehaviour
     public Transform muzzleLocation;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
-    
+    public int Raycastdamage;
 
     private void Update()
     {
@@ -118,10 +118,23 @@ public class GunMechanics : MonoBehaviour
         {
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out rayHit, range, whatIsEnemy))
             {
-                Debug.Log(rayHit.collider.name);
-                //rayhit get ememy health script to damage it for raycast;
+                Debug.Log("Hit: " + rayHit.transform.name);
+
+                if (rayHit.transform.CompareTag("Enemy"))
+                {
+                    EnemyHealth enemyHealth = rayHit.transform.GetComponentInParent<EnemyHealth>();
+
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.TakeDamage(Raycastdamage);
+                    }
+                    else
+                    {
+                        Debug.LogError("EnemyHealth script not found on hit object!");
+                    }
+                }
+                Instantiate(bulletHole, rayHit.point, Quaternion.Euler(0, 180, 0));
             }
-            Instantiate(bulletHole, rayHit.point, Quaternion.Euler(0, 180, 0));
         }
         Instantiate(muzzleFlash, muzzleLocation.position,Quaternion.identity);
         bulletsLeft--;
