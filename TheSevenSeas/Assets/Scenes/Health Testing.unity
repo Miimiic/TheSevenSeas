@@ -1220,7 +1220,7 @@ GameObject:
   - component: {fileID: 504078369}
   - component: {fileID: 504078368}
   m_Layer: 0
-  m_Name: CraftingCode
+  m_Name: CraftingCodeForClick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1249,6 +1249,7 @@ MonoBehaviour:
   nails: 0
   pipes: 0
   manuals: 0
+  gunType: 0
 --- !u!4 &504078369
 Transform:
   m_ObjectHideFlags: 0
@@ -1295,7 +1296,6 @@ Transform:
   m_Children:
   - {fileID: 1745229060}
   - {fileID: 388274420}
-  - {fileID: 990491146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517756632
@@ -1855,6 +1855,7 @@ MonoBehaviour:
   nails: 99
   pipes: 99
   manuals: 99
+  gunType: 0
 --- !u!114 &757131165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2355,6 +2356,7 @@ MonoBehaviour:
   nails: 2
   pipes: 0
   manuals: 0
+  gunType: 0
 --- !u!114 &857534656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2859,7 +2861,7 @@ GameObject:
   - component: {fileID: 990491148}
   - component: {fileID: 990491147}
   m_Layer: 5
-  m_Name: CraftingCanvas
+  m_Name: Crafting UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2872,9 +2874,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990491145}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.2410533, y: 3.2410533, z: 3.2410533}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1260985897}
@@ -2893,13 +2895,13 @@ RectTransform:
   - {fileID: 2014707038}
   - {fileID: 757131163}
   - {fileID: 1677782267}
-  m_Father: {fileID: 512231738}
+  m_Father: {fileID: 1745229060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960.0001, y: 925.96906}
+  m_SizeDelta: {x: 592.4, y: 571.4}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990491147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3046,7 +3048,7 @@ GameObject:
   - component: {fileID: 1195105549}
   - component: {fileID: 1195105548}
   m_Layer: 0
-  m_Name: InventoryCode
+  m_Name: InventoryCodeForClick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3517,6 +3519,7 @@ MonoBehaviour:
   nails: 0
   pipes: 0
   manuals: 0
+  gunType: 0
 --- !u!114 &1276478609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4171,6 +4174,7 @@ RectTransform:
   - {fileID: 801949898}
   - {fileID: 1324433714}
   - {fileID: 3747962909749515900}
+  - {fileID: 990491146}
   m_Father: {fileID: 512231738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4560,6 +4564,7 @@ MonoBehaviour:
   nails: 66
   pipes: 66
   manuals: 66
+  gunType: 0
 --- !u!114 &2014707040
 MonoBehaviour:
   m_ObjectHideFlags: 0
