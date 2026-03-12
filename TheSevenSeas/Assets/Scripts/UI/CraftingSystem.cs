@@ -8,7 +8,8 @@ public class CraftingSystem : MonoBehaviour
 
     //Specific for each button
     public List<TextMeshProUGUI> textList;
-    public MonoBehaviorScript player;
+    public Transform player;
+    private PlayerInventoryController craftingCode;
     public string type;
     public int damage;
     public float speed;
@@ -19,6 +20,9 @@ public class CraftingSystem : MonoBehaviour
     public int pipes;
     public int manuals;
 
+    private void Start() {
+        craftingCode = player.GetComponent<PlayerInventoryController>();
+    }
 
     public void ShowInfo () {
         //Update the text-Not necessarily the final stat types/values
@@ -34,20 +38,20 @@ public class CraftingSystem : MonoBehaviour
     }
     public void Craft()
     {
-        if (GetWoodAmount >= wood) {
-            AddWood(-1 * wood);
+        if (craftingCode.GetWoodAmount() >= wood) {
+            craftingCode.AddWood(-1 * wood);
         }
-        if (GetBrickAmount >= brick)
+        if (craftingCode.GetBrickAmount() >= brick)
         {
-            AddBrick(-1 * brick);
+            craftingCode.AddBrick(-1 * brick);
         }
-        if (GetMetalAmount >= metal)
+        if (craftingCode.GetMetalAmount() >= metal)
         {
-            AddMetal(-1 * metal);
+            craftingCode.AddMetal(-1 * metal);
         }
-        if (GetNailAmount >= nail)
+        if (craftingCode.GetNailAmount() >= nails)
         {
-            AddNail(-1 * nail);
+            craftingCode.AddNail(-1 * nails);
         }
 
         }
