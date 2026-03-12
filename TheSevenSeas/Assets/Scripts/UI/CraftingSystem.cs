@@ -19,6 +19,7 @@ public class CraftingSystem : MonoBehaviour
     public int nails;
     public int pipes;
     public int manuals;
+    public int gunType;
 
     private void Start() {
         craftingCode = player.GetComponent<PlayerInventoryController>();
@@ -38,22 +39,14 @@ public class CraftingSystem : MonoBehaviour
     }
     public void Craft()
     {
-        if (craftingCode.GetWoodAmount() >= wood) {
+        if (craftingCode.GetWoodAmount() >= wood && craftingCode.GetBrickAmount() >= brick && craftingCode.GetMetalAmount() >= metal && craftingCode.GetBrickAmount() >= nails) {
             craftingCode.AddWood(-1 * wood);
-        }
-        if (craftingCode.GetBrickAmount() >= brick)
-        {
-            craftingCode.AddBrick(-1 * brick);
-        }
-        if (craftingCode.GetMetalAmount() >= metal)
-        {
-            craftingCode.AddMetal(-1 * metal);
-        }
-        if (craftingCode.GetNailAmount() >= nails)
-        {
+            craftingCode.AddWood(-1 * brick);
+            craftingCode.AddWood(-1 * metal);
             craftingCode.AddNail(-1 * nails);
+            //Spawn gun gunType
         }
 
-        }
+    }
 }
 
