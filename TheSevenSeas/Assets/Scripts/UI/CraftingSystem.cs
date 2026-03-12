@@ -8,6 +8,7 @@ public class CraftingSystem : MonoBehaviour
 
     //Specific for each button
     public List<TextMeshProUGUI> textList;
+    public MonoBehaviorScript player;
     public string type;
     public int damage;
     public float speed;
@@ -19,13 +20,7 @@ public class CraftingSystem : MonoBehaviour
     public int manuals;
 
 
-
-    void Start()
-    {
-
-    }
-
-    public void ButtonClick () {
+    public void ShowInfo () {
         //Update the text-Not necessarily the final stat types/values
         textList[0].text = "Name: "+ type;
         textList[1].text = "Damage: "+damage;
@@ -36,7 +31,25 @@ public class CraftingSystem : MonoBehaviour
         textList[6].text = "-" + nails+ " nails";
         textList[7].text = "-" + pipes+ " pipes";
         textList[8].text = "-" + manuals+ " manuals";
-
-
     }
+    public void Craft()
+    {
+        if (GetWoodAmount >= wood) {
+            AddWood(-1 * wood);
+        }
+        if (GetBrickAmount >= brick)
+        {
+            AddBrick(-1 * brick);
+        }
+        if (GetMetalAmount >= metal)
+        {
+            AddMetal(-1 * metal);
+        }
+        if (GetNailAmount >= nail)
+        {
+            AddNail(-1 * nail);
+        }
+
+        }
 }
+
