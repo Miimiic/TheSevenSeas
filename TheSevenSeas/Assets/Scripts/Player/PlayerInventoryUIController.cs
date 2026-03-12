@@ -15,7 +15,7 @@ public class PlayerInventoryUIController : MonoBehaviour
     [SerializeField] private TMP_Text armourText;
 
     // The in-game health text, Disabled when inventory opens
-    [SerializeField] private TMP_Text mainHealthText;
+    [SerializeField] private GameObject mainHealthBar;
 
 
     // Update is called once per frame
@@ -45,13 +45,13 @@ public class PlayerInventoryUIController : MonoBehaviour
         if (parentUiObject.gameObject.activeInHierarchy)
         {
             HandleInventoryUI();
-            mainHealthText.gameObject.SetActive(true);
+            mainHealthBar.SetActive(true);
             parentUiObject.gameObject.SetActive(false);
         }
         else
         {
             HandleInventoryUI();
-            mainHealthText.gameObject.SetActive(false);
+            mainHealthBar.gameObject.SetActive(false);
             parentUiObject.gameObject.SetActive(true);  
         }
     }
