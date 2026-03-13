@@ -3495,6 +3495,7 @@ MonoBehaviour:
   titanfallCanLandOnMask:
     serializedVersion: 2
     m_Bits: 64
+  titanfallLandingCollision: {fileID: 0}
 --- !u!136 &1641221853631263796
 CapsuleCollider:
   m_ObjectHideFlags: 0
