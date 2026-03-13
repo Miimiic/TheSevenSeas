@@ -3347,6 +3347,7 @@ GameObject:
   - component: {fileID: 7384887983791885458}
   - component: {fileID: 4558241684510148304}
   - component: {fileID: 1853968681236931935}
+  - component: {fileID: 7883504990292640822}
   m_Layer: 8
   m_Name: Mech Object
   m_TagString: Mech
@@ -3484,7 +3485,7 @@ MonoBehaviour:
   mechModel: {fileID: 7684944945610954524}
   mainCollider: {fileID: 1641221853631263796}
   mainRigidbody: {fileID: 473403435472871303}
-  titanfallSpeed: 1
+  titanfallSpeed: 0.8
   mainPlayerCamera: {fileID: 0}
   titanfallMarker: {fileID: 237181614917797312, guid: f1f728a6c31aed745b6146902de9225e, type: 3}
   titanfallDustImpact: {fileID: 1016185912300008292, guid: 60e8b963cbf13074098ac3d41cb01b86, type: 3}
@@ -3600,18 +3601,116 @@ MonoBehaviour:
   explosionEffect: {fileID: 4757699298214389188, guid: 5782e53f7b50fe34097acaf5ba777a8b, type: 3}
   muzzleFlashLocation: {fileID: 2555633529863238176}
   muzzleFlashEffect: {fileID: 0}
+  bloodSplatter: {fileID: 4227297792760824461, guid: 2c6d0008feb38f143a76613a0e9c9c03, type: 3}
   ammoCounterParent: {fileID: 0}
-  fireRate: 60
+  fireRate: 90
   ammoCount: 24
   maxAmmoCapacity: 24
   reloadTime: 3
   range: 120
-  fullAuto: 1
   damage: 30
-  splashDamage: 15
-  splashDamageRadius: 3
   canFire: 1
   isReloading: 0
+  canReload: 0
+  cannonSource: {fileID: 0}
+  cannonSound: {fileID: 8300000, guid: cea733a77dd0c5f4383573b64692c21a, type: 3}
+--- !u!82 &7883504990292640822
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026949655286623146}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.461
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 185
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1030055575040050818
 GameObject:
   m_ObjectHideFlags: 0
@@ -19902,7 +20001,7 @@ Transform:
   m_GameObject: {fileID: 5847754788234954101}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.10499573, y: -2.5751266, z: 2.052002}
+  m_LocalPosition: {x: -0.10499573, y: -0.68, z: 1.664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

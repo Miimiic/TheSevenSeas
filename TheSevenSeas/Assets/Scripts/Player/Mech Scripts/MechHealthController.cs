@@ -32,7 +32,7 @@ public class MechHealthController : MonoBehaviour
     [SerializeField] private Rigidbody mainRigidbody;
 
     [Header("Titanfall Variables")]
-    [SerializeField] private int titanfallSpeed;
+    [SerializeField] private float titanfallSpeed;
     [SerializeField] private Camera mainPlayerCamera;
     [SerializeField] private GameObject titanfallMarker;
     [SerializeField] private GameObject titanfallDustImpact;

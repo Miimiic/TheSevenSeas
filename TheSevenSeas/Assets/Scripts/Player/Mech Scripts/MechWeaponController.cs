@@ -5,7 +5,8 @@ public class MechWeaponController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Camera titanCamera;
-    [SerializeField] private GameObject explosionEffect, muzzleFlashLocation, muzzleFlashEffect;
+    [SerializeField] private GameObject explosionEffect, muzzleFlashLocation, muzzleFlashEffect, bloodSplatter;
+
 
     [Header("UI Components")]
     [SerializeField] private GameObject ammoCounterParent;
@@ -15,7 +16,9 @@ public class MechWeaponController : MonoBehaviour
     [SerializeField] private int ammoCount, maxAmmoCapacity, reloadTime, range;
     [SerializeField] private int damage;
     // Splash Damage is handled by the actual explosion effect, It was the easiest way to make it work without breaking 90+ other things
-    [SerializeField] private bool canFire,isReloading,canReload;
+    [SerializeField] private bool canFire, isReloading, canReload;
+    [SerializeField] private AudioSource cannonSource;
+    [SerializeField] private AudioClip cannonSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +27,7 @@ public class MechWeaponController : MonoBehaviour
         canFire = true;
         isReloading = false;
         canReload = false;
+        cannonSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class MechWeaponController : MonoBehaviour
 
     private void Fire()
     {
+        cannonSource.PlayOneShot(cannonSound);
         ammoCount--;
         RaycastHit hit;
         // Also play the sound
@@ -75,6 +80,10 @@ public class MechWeaponController : MonoBehaviour
 
                 if (enemyHealth != null)
                 {
+                    if (enemyHealth.GetComponent<EnemyHealth>().health-damage <= 0)
+                    {
+                        Instantiate(bloodSplatter,hit.point, hit.transform.rotation);
+                    }
                     enemyHealth.TakeDamage(damage);
                 }
                 else

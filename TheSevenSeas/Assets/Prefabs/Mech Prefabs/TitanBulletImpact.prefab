@@ -4870,6 +4870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1646d880f4f0a904baa04e2a7014835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSpray: {fileID: 4227297792760824461, guid: 2c6d0008feb38f143a76613a0e9c9c03, type: 3}
 --- !u!108 &3317868374016451712
 Light:
   m_ObjectHideFlags: 0

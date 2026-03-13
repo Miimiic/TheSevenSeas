@@ -860,6 +860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Scene Mech
       objectReference: {fileID: 0}
+    - target: {fileID: 7883504990292640822, guid: 2489a4a77c68b8f468279a8fa45efdc1, type: 3}
+      propertyPath: m_Volume
+      value: 0.322
+      objectReference: {fileID: 0}
     - target: {fileID: 8315357911958194004, guid: 2489a4a77c68b8f468279a8fa45efdc1, type: 3}
       propertyPath: m_Enabled
       value: 0

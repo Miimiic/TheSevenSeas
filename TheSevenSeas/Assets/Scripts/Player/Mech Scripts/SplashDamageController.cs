@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SplashDamageController : MonoBehaviour
 {
+    [SerializeField] private GameObject bloodSpray;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +19,10 @@ public class SplashDamageController : MonoBehaviour
     {
         if(other.gameObject.tag=="Enemy")
         {
+            if(other.GetComponent<EnemyHealth>().health-15<=0)
+            {
+                Instantiate(bloodSpray,other.transform.position, Quaternion.identity);
+            }
             other.GetComponent<EnemyHealth>().TakeDamage(15);
         }
         if(other.gameObject.tag=="Mech")
