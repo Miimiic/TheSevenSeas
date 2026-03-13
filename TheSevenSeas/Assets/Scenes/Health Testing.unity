@@ -860,6 +860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Scene Mech
       objectReference: {fileID: 0}
+    - target: {fileID: 8315357911958194004, guid: 2489a4a77c68b8f468279a8fa45efdc1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8909441886952582565, guid: 2489a4a77c68b8f468279a8fa45efdc1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -126.19449
@@ -1279,6 +1283,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1435848687679130118, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1565,6 +1573,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1435848687679130118, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -1751,6 +1763,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1435848687679130118, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -2038,6 +2054,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1435848687679130118, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
       propertyPath: m_Name
       value: Enemy

@@ -20,6 +20,7 @@ public class MechEntering : MonoBehaviour
     [SerializeField] private MechMovementController mechMovement;
     [SerializeField] private MechAbilityController mechAbility;
     [SerializeField] private MechHealthController mechHealth;
+    [SerializeField] private MechWeaponController mechWeapon;
     [SerializeField] private Camera mechCamera;
     [SerializeField] private GameObject mechExitArea;
     [SerializeField] private Light headlight;
@@ -89,7 +90,9 @@ public class MechEntering : MonoBehaviour
             // Exit Mech
             // Disable all mech movement and cameras, enabling players
 
+            mechWeapon.enabled = false;
             mechCamera.enabled = false;
+            mechCamera.GetComponent<AudioListener>().enabled = false;
             mechMovement.enabled = false;
             headlight.enabled = false;
             mechAbility.enabled = false;
@@ -127,7 +130,9 @@ public class MechEntering : MonoBehaviour
             // Enter Mech
             // Disable all player movement and cameras, enabling mechs
 
+            mechWeapon.enabled = true;
             mechCamera.enabled = true;
+            mechCamera.GetComponent<AudioListener>().enabled = true;
             mechMovement.enabled = true;
             headlight.enabled = true;
             mechAbility.enabled = true;
