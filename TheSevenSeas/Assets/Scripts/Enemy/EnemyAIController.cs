@@ -12,6 +12,7 @@ public class EnemyAIController : MonoBehaviour
     public Transform mech;
     public Transform priorityTarget;
     public LayerMask whatIsGround, whatIsPlayer;
+    private EnemyHealth enemyHealth;
 
     [Header("Patrolling")]
     public Vector3 walkPoint;
@@ -44,11 +45,12 @@ public class EnemyAIController : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        player = GameObject.Find("Player Main").transform;
-        mech = GameObject.Find("Mech Object").transform;
+        player = GameObject.FindWithTag("Player").transform;
+        mech = GameObject.FindWithTag("Mech").transform;
 
         agent = GetComponent<NavMeshAgent>();
         enemyAttack = GetComponent<EnemyAttack>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
         priorityTarget = player;
 
@@ -57,8 +59,7 @@ public class EnemyAIController : MonoBehaviour
 
     private void Update()
     {
-
-        // If you're wondering aidan... Honestly I dunno why I decided to do it like this, player.GetChild(1) is just the model for the player, so it checks if thats active... Now why I didnt make it a variable, I could not tell you
+        // Determine priority target and vision parameters based on if player is or isn't in the mech
         if (mech.gameObject.activeSelf && !player.GetChild(1).gameObject.activeSelf)
         {
             priorityTarget = mech;
@@ -76,10 +77,11 @@ public class EnemyAIController : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         // If enemy can see player normally, enter chase mode
-        if (canCurrentlySeePlayer)
+        if (canCurrentlySeePlayer || enemyHealth.tookDamage)
         {
             isChasing = true;
             loseSightTimer = loseSightDelay;
+            enemyHealth.tookDamage = false; // Reset damage flag after delay
         }
 
         // If chasing but can't currently see player
@@ -159,7 +161,7 @@ public class EnemyAIController : MonoBehaviour
     {
         // Makes sure enemy doesn't move
         agent.SetDestination(transform.position);
-        // Makes enemy look at player while ignoring y axis to prevent that weird tilting
+        // Makes enemy look at player while ignoring y axis to prevent enemy tilting
         Vector3 direction = (priorityTarget.position - transform.position);
         direction.y = 0f;
         // Smoothly rotate towards the player
@@ -193,7 +195,7 @@ public class EnemyAIController : MonoBehaviour
         if (angle > viewAngle / 2)
             return false;
 
-        //Check line of sight
+        // Check line of sight
         if (Physics.Raycast(transform.position + Vector3.up * 1.5f, directionToPlayer, out RaycastHit hit, viewDistance))
         {
             if (hit.transform == priorityTarget)
