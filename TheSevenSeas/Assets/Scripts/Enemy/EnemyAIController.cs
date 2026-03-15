@@ -13,6 +13,7 @@ public class EnemyAIController : MonoBehaviour
     public Transform priorityTarget;
     public LayerMask whatIsGround, whatIsPlayer;
     private EnemyHealth enemyHealth;
+    private Animator animator;
 
     [Header("Patrolling")]
     public Vector3 walkPoint;
@@ -26,6 +27,7 @@ public class EnemyAIController : MonoBehaviour
     bool alreadyAttacked;
     private EnemyAttack enemyAttack;
     public float attackRange;
+    private bool enteredAttackState;
 
     [Header("Vision")]
     public bool playerInSightRange;
@@ -51,6 +53,7 @@ public class EnemyAIController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         enemyAttack = GetComponent<EnemyAttack>();
         enemyHealth = GetComponent<EnemyHealth>();
+        animator = GetComponentInChildren<Animator>();
 
         priorityTarget = player;
 
@@ -115,13 +118,39 @@ public class EnemyAIController : MonoBehaviour
         else if (isChasing && playerInAttackRange)
         {
             agent.speed = 0f;
+
+            if (!enteredAttackState)
+            {
+                enteredAttackState = true;
+                alreadyAttacked = true;
+                Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            }
+
             AttackPlayer();
         }
+        if (!playerInAttackRange)
+        {
+            enteredAttackState = false;
+        }
+    }
+
+    // Animation state management
+    private void SetAnimation(bool idle, bool walking, bool chasing, bool attacking)
+    {
+        animator.SetBool("IsIdle", idle);
+        animator.SetBool("IsWalking", walking);
+        animator.SetBool("IsChasing", chasing);
+        animator.SetBool("IsAttacking", attacking);
     }
 
     private void Patrolling()
     {
-        if (isWaiting) return;
+        if (isWaiting)
+        {
+            return;
+        }
+
+        SetAnimation(false, true, false, false);
 
         // If walk point is not set, search for one
         if (!walkPointSet)
@@ -154,6 +183,7 @@ public class EnemyAIController : MonoBehaviour
 
     private void ChasePlayer()
     {
+        SetAnimation(false, false, true, false);
         agent.SetDestination(priorityTarget.position);
     }
 
@@ -167,6 +197,7 @@ public class EnemyAIController : MonoBehaviour
         // Smoothly rotate towards the player
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        SetAnimation(false, false, false, true);
 
         if (!alreadyAttacked)
         {
@@ -179,6 +210,7 @@ public class EnemyAIController : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        SetAnimation(true, false, false, false);
     }
 
     private bool CanSeePlayer()
@@ -221,6 +253,7 @@ public class EnemyAIController : MonoBehaviour
     {
         isWaiting = true;
         agent.isStopped = true;
+        SetAnimation(true, false, false, false);
 
         float waitTime = Random.Range(2f, 5f);
         yield return new WaitForSeconds(waitTime);
