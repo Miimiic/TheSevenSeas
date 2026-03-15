@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 7414835785324033368}
   - component: {fileID: 58866241772018110}
   m_Layer: 2
-  m_Name: Rifle Full auto
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,15 +181,15 @@ MonoBehaviour:
   muzzleFlash: {fileID: 6263253174178113302, guid: c0f99fb54e035db44a40820ee5385207, type: 3}
   bulletHole: {fileID: 3485263468055717485, guid: 9201436fccef34b41b327954d79be743, type: 3}
   BulletSpeed: 1
-  FullAuto: 1
+  FullAuto: 0
   raycast: 1
   timeBetweenShooting: 0.5
-  spread: 0
-  reloadTime: 4
+  spread: 12
+  reloadTime: 1
   timeBetweenShots: 0.5
   range: 30
-  magSize: 30
-  bulletsPerTap: 1
+  magSize: 64
+  bulletsPerTap: 12
   text: {fileID: 0}
   reloadAudio: {fileID: 8300000, guid: 83a1a347113c9aa4a8722ba5ca4eceaa, type: 3}
   shootAudio: {fileID: 8300000, guid: 356dfc85b8b167d4f8269d55555713bc, type: 3}
@@ -200,7 +200,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295
-  Raycastdamage: 10
+  Raycastdamage: 0
 --- !u!82 &58866241772018110
 AudioSource:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.232
+  m_Volume: 0.142
   m_Pitch: 1
   Loop: 0
   Mute: 0
