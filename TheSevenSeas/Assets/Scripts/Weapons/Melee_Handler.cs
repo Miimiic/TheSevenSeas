@@ -38,6 +38,10 @@ public class Melee_Handler : MonoBehaviour
 
         
         }
+        if(durabilityText == null)
+        {
+            durabilityText = GameObject.FindGameObjectWithTag("AmmoCounter").GetComponent<TextMeshProUGUI>();
+        }
         durabilityText.SetText(durability.ToString());
     }
     void canWeAttack()

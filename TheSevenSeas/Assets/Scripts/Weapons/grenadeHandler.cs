@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class grenadeHandler : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class grenadeHandler : MonoBehaviour
     public Transform cam;
     public Transform attackPT;
     public GameObject NailBomb;
+    public TextMeshProUGUI text;
 
     [Header("Settings")]
     public int GrenadesLeft;
@@ -25,11 +28,17 @@ public class grenadeHandler : MonoBehaviour
     }
     private void Update()
     {
+        if (text == null)
+        {
+            text = GameObject.FindGameObjectWithTag("GrenadeCounter").GetComponent<TextMeshProUGUI>();
+
+        }
         if (Input.GetKeyDown(throwKey) && readyTothrow && GrenadesLeft>0)
         {
             Throw();
             
         }
+        text.SetText(GrenadesLeft.ToString());
     }
     void Throw() 
     {
