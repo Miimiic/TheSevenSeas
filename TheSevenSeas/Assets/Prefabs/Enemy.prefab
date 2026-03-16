@@ -290,9 +290,13 @@ PrefabInstance:
       value: EnemyModel
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2a2baa8d25830534ba488f540043d94b, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 2a2baa8d25830534ba488f540043d94b, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 2a2baa8d25830534ba488f540043d94b, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: d5de21d3bc044384992edc77dc2d5980, type: 2}
+      objectReference: {fileID: 9100000, guid: 95cf4ef8d2f9eeb408568e24e11e4762, type: 2}
     - target: {fileID: 5866666021909216657, guid: 2a2baa8d25830534ba488f540043d94b, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
