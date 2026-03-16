@@ -107,6 +107,9 @@ public class GunMechanics : MonoBehaviour
         
         float x = Random.Range(-spread,spread);
         float y = Random.Range(-spread, spread);
+
+        Vector3 direction = fpsCam.transform.forward + new Vector3 (x,y,0); 
+
         if (!raycast)
         {
             Rigidbody justShotRB;
@@ -116,7 +119,7 @@ public class GunMechanics : MonoBehaviour
         }
         if (raycast)
         {
-            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out rayHit, range, whatIsEnemy))
+            if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
             {
                 Debug.Log("Hit: " + rayHit.transform.name);
 

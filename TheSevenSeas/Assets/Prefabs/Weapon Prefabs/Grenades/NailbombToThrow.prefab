@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 317bb1411725bc2488b5c7f0e304c0b9, type: 3}
       propertyPath: m_Name
-      value: NailBombToThrow
+      value: NailbombToThrow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -77,6 +77,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 317bb1411725bc2488b5c7f0e304c0b9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4014255067222312711}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 317bb1411725bc2488b5c7f0e304c0b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 194577767532895481}
   m_SourcePrefab: {fileID: 100100000, guid: 317bb1411725bc2488b5c7f0e304c0b9, type: 3}
 --- !u!1 &1801219299593323119 stripped
 GameObject:
@@ -131,6 +134,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &194577767532895481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801219299593323119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1d45446840d154fb3f186090ba3419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeForBulletToDespawn: 2.02
+  bulletDamage: 0
 --- !u!4 &3308871910817019140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4167280743394806330, guid: 317bb1411725bc2488b5c7f0e304c0b9, type: 3}
