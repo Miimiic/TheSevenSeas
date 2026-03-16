@@ -67,13 +67,13 @@ public class PlayerInventoryUIController : MonoBehaviour
         if (craftingUIObject.gameObject.activeInHierarchy)
         {
             Cursor.visible = true;
-            mainHealthText.gameObject.SetActive(true);
+            
             craftingUIObject.gameObject.SetActive(false);
         }
         else
         {
             Cursor.visible = false;
-            mainHealthText.gameObject.SetActive(false);
+            
             craftingUIObject.gameObject.SetActive(true);
         }
     }
