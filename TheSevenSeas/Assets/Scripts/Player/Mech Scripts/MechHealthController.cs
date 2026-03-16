@@ -32,7 +32,7 @@ public class MechHealthController : MonoBehaviour
     [SerializeField] private Rigidbody mainRigidbody;
 
     [Header("Titanfall Variables")]
-    [SerializeField] private int titanfallSpeed;
+    [SerializeField] private float titanfallSpeed;
     [SerializeField] private Camera mainPlayerCamera;
     [SerializeField] private GameObject titanfallMarker;
     [SerializeField] private GameObject titanfallDustImpact;
@@ -274,7 +274,6 @@ public class MechHealthController : MonoBehaviour
         // Check to stop falling
         RaycastHit hit = new RaycastHit();
         Physics.Raycast(mechScriptObject.transform.position, -Vector3.up, out hit);
-        Debug.Log(hit.ToString());
         if (hit.distance < 6 && !hasSmoked)
         {
             hasSmoked = true;

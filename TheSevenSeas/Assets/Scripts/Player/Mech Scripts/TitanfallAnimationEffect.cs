@@ -11,12 +11,15 @@ public class TitanfallAnimationEffect : MonoBehaviour
     [SerializeField] private GameObject column;
 
     [Header("Animation Variables")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip titanfallSfx;
     [SerializeField] private float animSpeed;
     [SerializeField] private float animationLifetime = 3;
 
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(titanfallSfx);
     }
 
     // Update is called once per frame
