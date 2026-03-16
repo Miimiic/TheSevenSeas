@@ -9,7 +9,6 @@ public class CraftingSystem : MonoBehaviour
     //Specific for each button
     public List<TextMeshProUGUI> textList;
     public Transform player;
-    private PlayerInventoryController craftingCode;
     public string type;
     public int damage;
     public float speed;
@@ -20,33 +19,36 @@ public class CraftingSystem : MonoBehaviour
     public int pipes;
     public int manuals;
     public int gunType;
+    public Transform craftButton;
+    private CraftingButtonCode craftButtonCode;
+    [SerializeField] private GameObject theCanvas;
+    [SerializeField] private TMP_Text mainHealthText;
 
-    private void Start() {
-        craftingCode = player.GetComponent<PlayerInventoryController>();
-    }
 
-    public void ShowInfo () {
-        //Update the text-Not necessarily the final stat types/values
-        textList[0].text = "Name: "+ type;
-        textList[1].text = "Damage: "+damage;
-        textList[2].text = "Speed: "+speed;
-        textList[3].text = "-" + wood+ " wood";
-        textList[4].text = "-" + brick+ " brick";
-        textList[5].text = "-" + metal+ " metal";
-        textList[6].text = "-" + nails+ " nails";
-        textList[7].text = "-" + pipes+ " pipes";
-        textList[8].text = "-" + manuals+ " manuals";
-    }
-    public void Craft()
+    private void Start()
     {
-        if (craftingCode.GetWoodAmount() >= wood && craftingCode.GetBrickAmount() >= brick && craftingCode.GetMetalAmount() >= metal && craftingCode.GetBrickAmount() >= nails) {
-            craftingCode.AddWood(-1 * wood);
-            craftingCode.AddWood(-1 * brick);
-            craftingCode.AddWood(-1 * metal);
-            craftingCode.AddNail(-1 * nails);
-            //Spawn gun gunType
-        }
+        //theCanvas.gameObject.SetActive(false);
+        craftButtonCode = craftButton.GetComponent<CraftingButtonCode>();
+
+    }
+
+    public void ShowGunInfo()
+    {
+        //Update the text-Not necessarily the final stat types/values
+        textList[0].text = "Name: " + type;
+        textList[1].text = "Damage: " + damage;
+        textList[2].text = "Speed: " + speed;
+        textList[3].text = "-" + wood + " wood";
+        textList[4].text = "-" + brick + " brick";
+        textList[5].text = "-" + metal + " metal";
+        textList[6].text = "-" + nails + " nails";
+        textList[7].text = "-" + pipes + " pipes";
+        textList[8].text = "-" + manuals + " manuals";
+        //Add the values to the craft button so they can be used when crafting
+        craftButtonCode.wood = wood;
+        craftButtonCode.brick = brick;
+        craftButtonCode.metal = metal;
+        craftButtonCode.nails = nails;
 
     }
 }
-

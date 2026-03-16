@@ -7,6 +7,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     [Header("Objects")]
     [SerializeField] GameObject parentUiObject;
+    [SerializeField] GameObject craftingUIObject;
 
     [Header("Text Components")]
     [SerializeField] private TMP_Text basicMaterialText;
@@ -24,6 +25,11 @@ public class PlayerInventoryUIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInventoryUI(); 
+        }
+        //Daniel's code
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleCraftingUI();
         }
     }
 
@@ -53,6 +59,22 @@ public class PlayerInventoryUIController : MonoBehaviour
             HandleInventoryUI();
             mainHealthText.gameObject.SetActive(false);
             parentUiObject.gameObject.SetActive(true);  
+        }
+    }
+    //Daniel's code
+    public void ToggleCraftingUI()
+    {
+        if (craftingUIObject.gameObject.activeInHierarchy)
+        {
+            Cursor.visible = true;
+            mainHealthText.gameObject.SetActive(true);
+            craftingUIObject.gameObject.SetActive(false);
+        }
+        else
+        {
+            Cursor.visible = false;
+            mainHealthText.gameObject.SetActive(false);
+            craftingUIObject.gameObject.SetActive(true);
         }
     }
 }

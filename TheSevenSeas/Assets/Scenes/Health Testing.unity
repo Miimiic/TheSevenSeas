@@ -359,6 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentUiObject: {fileID: 1324433713}
+  craftingUIObject: {fileID: 990491145}
   basicMaterialText: {fileID: 526868832}
   rareMaterialText: {fileID: 902082922}
   healthText: {fileID: 1653388535}
@@ -376,14 +377,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944d1b7126e4a8c4eb8f1c4f7328a0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  woodAmount: 0
-  brickAmount: 0
-  metalAmount: 0
-  nailAmount: 0
-  metalPipeAmount: 0
-  instructionManualAmount: 0
-  workerFleshAmount: 0
-  eldritchHeartAmount: 0
+  woodAmount: 10
+  brickAmount: 10
+  metalAmount: 10
+  nailAmount: 10
+  metalPipeAmount: 10
+  instructionManualAmount: 10
+  workerFleshAmount: 10
+  eldritchHeartAmount: 10
 --- !u!4 &329598129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3568811185952832113, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
@@ -1209,62 +1210,6 @@ RectTransform:
   m_AnchoredPosition: {x: 600, y: -390}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &504078367
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 504078369}
-  - component: {fileID: 504078368}
-  m_Layer: 0
-  m_Name: CraftingCodeForClick
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &504078368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504078367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc5c650d9cd5acb49aa02482f6340e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textList: []
-  player: {fileID: 329598129}
-  type: 
-  damage: 0
-  speed: 0
-  wood: 0
-  brick: 0
-  metal: 0
-  nails: 0
-  pipes: 0
-  manuals: 0
-  gunType: 0
---- !u!4 &504078369
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504078367}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &512231737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 990491146}
   - {fileID: 1745229060}
   - {fileID: 388274420}
   m_Father: {fileID: 0}
@@ -1474,7 +1420,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526683235
 MonoBehaviour:
@@ -1856,6 +1802,9 @@ MonoBehaviour:
   pipes: 99
   manuals: 99
   gunType: 0
+  craftButton: {fileID: 1677782267}
+  theCanvas: {fileID: 990491145}
+  mainHealthText: {fileID: 801949899}
 --- !u!114 &757131165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1902,7 +1851,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 757131164}
         m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
-        m_MethodName: ShowInfo
+        m_MethodName: ShowGunInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2357,6 +2306,9 @@ MonoBehaviour:
   pipes: 0
   manuals: 0
   gunType: 0
+  craftButton: {fileID: 1677782267}
+  theCanvas: {fileID: 990491145}
+  mainHealthText: {fileID: 801949899}
 --- !u!114 &857534656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2401,9 +2353,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 504078368}
+      - m_Target: {fileID: 857534655}
         m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
-        m_MethodName: ShowInfo
+        m_MethodName: ShowGunInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2874,9 +2826,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990491145}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.2410533, y: 3.2410533, z: 3.2410533}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1260985897}
@@ -2895,13 +2847,13 @@ RectTransform:
   - {fileID: 2014707038}
   - {fileID: 757131163}
   - {fileID: 1677782267}
-  m_Father: {fileID: 1745229060}
+  m_Father: {fileID: 512231738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960.0001, y: 925.96906}
-  m_SizeDelta: {x: 592.4, y: 571.4}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &990491147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3037,58 +2989,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8042866568724873084, guid: bb80c50f7dddfad4fbbfb0d18d5abadb, type: 3}
   m_PrefabInstance: {fileID: 305245795}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1195105547
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1195105549}
-  - component: {fileID: 1195105548}
-  m_Layer: 0
-  m_Name: InventoryCodeForClick
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1195105548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195105547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 944d1b7126e4a8c4eb8f1c4f7328a0c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  woodAmount: 0
-  brickAmount: 0
-  metalAmount: 0
-  nailAmount: 0
-  metalPipeAmount: 0
-  instructionManualAmount: 0
-  workerFleshAmount: 0
-  eldritchHeartAmount: 0
---- !u!4 &1195105549
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195105547}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1244408929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3520,6 +3420,9 @@ MonoBehaviour:
   pipes: 0
   manuals: 0
   gunType: 0
+  craftButton: {fileID: 1677782267}
+  theCanvas: {fileID: 990491145}
+  mainHealthText: {fileID: 801949899}
 --- !u!114 &1276478609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3564,9 +3467,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 504078368}
+      - m_Target: {fileID: 1276478608}
         m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
-        m_MethodName: ShowInfo
+        m_MethodName: ShowGunInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3956,6 +3859,7 @@ GameObject:
   - component: {fileID: 1677782270}
   - component: {fileID: 1677782269}
   - component: {fileID: 1677782268}
+  - component: {fileID: 1677782271}
   m_Layer: 5
   m_Name: CraftButton
   m_TagString: Untagged
@@ -4027,9 +3931,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 504078368}
-        m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
-        m_MethodName: Craft
+      - m_Target: {fileID: 1677782271}
+        m_TargetAssemblyTypeName: CraftingButtonCode, Assembly-CSharp
+        m_MethodName: CraftGun
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4077,6 +3981,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677782266}
   m_CullTransparentMesh: 1
+--- !u!114 &1677782271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677782266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9835adee9a8c36b468d73d81c12978c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 329598129}
+  wood: 0
+  brick: 0
+  metal: 0
+  nails: 0
+  pipes: 0
+  manuals: 0
 --- !u!1 &1745229056
 GameObject:
   m_ObjectHideFlags: 0
@@ -4174,7 +4097,6 @@ RectTransform:
   - {fileID: 801949898}
   - {fileID: 1324433714}
   - {fileID: 3747962909749515900}
-  - {fileID: 990491146}
   m_Father: {fileID: 512231738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4565,6 +4487,9 @@ MonoBehaviour:
   pipes: 66
   manuals: 66
   gunType: 0
+  craftButton: {fileID: 1677782267}
+  theCanvas: {fileID: 990491145}
+  mainHealthText: {fileID: 801949899}
 --- !u!114 &2014707040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4609,9 +4534,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 504078368}
+      - m_Target: {fileID: 2014707039}
         m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
-        m_MethodName: ShowInfo
+        m_MethodName: ShowGunInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5575,5 +5500,3 @@ SceneRoots:
   - {fileID: 565461247}
   - {fileID: 1635883477159155223}
   - {fileID: 9152588923932165257}
-  - {fileID: 1195105549}
-  - {fileID: 504078369}
