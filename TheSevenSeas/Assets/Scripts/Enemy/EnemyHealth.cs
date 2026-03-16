@@ -4,6 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth;
     public float health;
+    public bool tookDamage = false;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             float damage = other.gameObject.GetComponent<bulletCode>().bulletDamage;
+            tookDamage = true;
             TakeDamage(damage);
         }
         
@@ -23,6 +25,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
         if (health <= 0)
         {
             Die();
