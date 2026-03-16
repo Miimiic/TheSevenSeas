@@ -43,7 +43,6 @@ public class MechHealthController : MonoBehaviour
     [SerializeField] private bool titanIsFalling;
     [SerializeField] private bool hasSmoked;
     [SerializeField] LayerMask titanfallCanLandOnMask;
-    [SerializeField] private BoxCollider titanfallLandingCollision;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -100,17 +99,9 @@ public class MechHealthController : MonoBehaviour
             {
                 RaycastHit hit = new RaycastHit();
                 Physics.Raycast(mainPlayerCamera.transform.position, mainPlayerCamera.transform.forward, out hit, Mathf.Infinity,titanfallCanLandOnMask);
-                if (Vector3.Distance(hit.point,GameObject.Find("Player Main").GetComponent<Transform>().position)<=10)
-                {
-                    Debug.Log("Standby for titanfall...");
-                    Titanfall(hit);
-                }
-            }
-
-            else if (!canCallTitan && mechCurrentHealth > 0)
-            {
-                // Self Destruct Titan
-                KillMech();
+                Debug.Log("Standby for titanfall...");
+                Titanfall(hit);
+                // Do the fucking coolest shit ever
             }
         }
     }
@@ -151,7 +142,10 @@ public class MechHealthController : MonoBehaviour
                 // NUCLEAR EJECTION ????!?!??!?!??!?!
 
                 // Leave the mech
-                
+                if(mechEntering.GetMechState())
+                {
+                    mechEntering.ToggleMechState();
+                }
 
                 KillMech();
             }
@@ -220,11 +214,6 @@ public class MechHealthController : MonoBehaviour
 
     public void KillMech()
     {
-        if (mechEntering.GetMechState())
-        {
-            mechEntering.ToggleMechState();
-        }
-
         isTitanDead = true;
 
         mechModel.gameObject.SetActive(false);
@@ -256,8 +245,6 @@ public class MechHealthController : MonoBehaviour
     private void Titanfall(RaycastHit rayHit)
     {
         Debug.Log("Titan Call recieved, Initiating Titanfall");
-
-        mainRigidbody.freezeRotation = true;
 
         canCallTitan = false;
         titanIsFalling = true;
@@ -296,7 +283,6 @@ public class MechHealthController : MonoBehaviour
         {
             titanIsFalling = false;
             mainRigidbody.useGravity = true;
-            mainRigidbody.linearDamping = 6;
             Debug.Log("Titan Landed");
         }
     }
