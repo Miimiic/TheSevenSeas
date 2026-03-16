@@ -2,13 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 
 public class WeaponInvSystem : MonoBehaviour
 {
+
     [Header("GunList")]
     public Transform[] weapons;
     [Header("KeyList")]
     public KeyCode[] keys;
+    [Header("UI")]
+    public GameObject gunUI;
     [Header("settings")]
     public float switchTime;
     private int selectedWeapon;
@@ -46,6 +50,11 @@ public class WeaponInvSystem : MonoBehaviour
             if (Input.GetKeyDown(keys[i]) && timeSincelastSwitched >= switchTime)
             {
                 selectedWeapon = i;
+                
+            }
+            if (Input.GetKeyDown(keys[i]))
+            {
+                gunUI.SetActive(true);
             }
         }
         if (previousWeapon != selectedWeapon)
@@ -54,7 +63,7 @@ public class WeaponInvSystem : MonoBehaviour
             
         }
         timeSincelastSwitched += Time.deltaTime;
-
+        
 
     }
     private void selectWeapons(int weaponIndex)
@@ -73,7 +82,7 @@ public class WeaponInvSystem : MonoBehaviour
     {
         print("weaponSwaped");
     }
-
+    
     
 
 

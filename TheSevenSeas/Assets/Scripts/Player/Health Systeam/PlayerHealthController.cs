@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 // The guiHealthText TMPro text must be manually assigned in the inspector.
 // Damaging the player will solely be handled by enemies or hazards. Functions are available for these objects to use.
@@ -10,7 +11,7 @@ using Unity.VisualScripting;
 public class PlayerHealthController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private TMP_Text guiHealthText;
+    [SerializeField] private RectMask2D healthBarMask;
 
     [Header("Health Values")]
     [SerializeField] private int playerCurrentHealth;
@@ -57,7 +58,7 @@ public class PlayerHealthController : MonoBehaviour
 
 
         // Handle it once on start
-        HandleHealthText();
+        HandleHealthBar();
     }
 
     private void FixedUpdate()
@@ -75,10 +76,22 @@ public class PlayerHealthController : MonoBehaviour
     }
     // ------------------------------- Private Functions -------------------------------
 
-    private void HandleHealthText()
+    
+
+    private void HandleHealthBar()
     {
-        // Only handle it when needed to save frames
-        guiHealthText.text = "Health : "+ playerCurrentHealth +" / " + playerMaxHealth;
+        if (healthBarMask == null) return;
+
+        float healthPercent = (float)playerCurrentHealth / (float)playerMaxHealth;
+        // 100% health = 0 padding, 0% health = 700 padding
+        float rightPadding = (1f - healthPercent) * 700f;
+
+        healthBarMask.padding = new Vector4(
+            healthBarMask.padding.x, // left
+            healthBarMask.padding.y, // top
+            rightPadding,            // right
+            healthBarMask.padding.w  // bottom
+        );
     }
 
     private void CheckForDeath()
@@ -114,7 +127,7 @@ public class PlayerHealthController : MonoBehaviour
             timeSinceDamage = 0;
 
             CheckForDeath();
-            HandleHealthText();
+            HandleHealthBar();
         }
 
         else
@@ -132,7 +145,7 @@ public class PlayerHealthController : MonoBehaviour
         }
 
         CheckForDeath();
-        HandleHealthText();
+        HandleHealthBar();
     }
 
     // ------------------------------- Getters and Setters -------------------------------
@@ -161,7 +174,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         playerCurrentHealth = newHealth;
 
-        HandleHealthText();
+        HandleHealthBar();
     }
 
     public void SetMaxHealth(int newMaxHealth)
@@ -169,7 +182,7 @@ public class PlayerHealthController : MonoBehaviour
         playerMaxHealth = newMaxHealth;
 
         CheckForDeath();
-        HandleHealthText();
+        HandleHealthBar();
     }
 
     public void SetArmourLevel(int newArmourLevel)

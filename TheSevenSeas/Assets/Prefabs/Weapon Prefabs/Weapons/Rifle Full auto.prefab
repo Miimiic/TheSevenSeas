@@ -184,7 +184,7 @@ MonoBehaviour:
   FullAuto: 1
   raycast: 1
   timeBetweenShooting: 0.5
-  spread: 1
+  spread: 0
   reloadTime: 4
   timeBetweenShots: 0.5
   range: 30
@@ -200,6 +200,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295
+  Raycastdamage: 10
 --- !u!82 &58866241772018110
 AudioSource:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.232
   m_Pitch: 1
   Loop: 0
   Mute: 0

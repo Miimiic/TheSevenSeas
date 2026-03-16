@@ -7,6 +7,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     [Header("Objects")]
     [SerializeField] GameObject parentUiObject;
+    [SerializeField] GameObject craftingUIObject;
 
     [Header("Text Components")]
     [SerializeField] private TMP_Text basicMaterialText;
@@ -15,7 +16,7 @@ public class PlayerInventoryUIController : MonoBehaviour
     [SerializeField] private TMP_Text armourText;
 
     // The in-game health text, Disabled when inventory opens
-    [SerializeField] private TMP_Text mainHealthText;
+    [SerializeField] private GameObject mainHealthBar;
 
 
     // Update is called once per frame
@@ -24,6 +25,11 @@ public class PlayerInventoryUIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInventoryUI(); 
+        }
+        //Daniel's code
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleCraftingUI();
         }
     }
 
@@ -45,14 +51,30 @@ public class PlayerInventoryUIController : MonoBehaviour
         if (parentUiObject.gameObject.activeInHierarchy)
         {
             HandleInventoryUI();
-            mainHealthText.gameObject.SetActive(true);
+            mainHealthBar.SetActive(true);
             parentUiObject.gameObject.SetActive(false);
         }
         else
         {
             HandleInventoryUI();
-            mainHealthText.gameObject.SetActive(false);
+            mainHealthBar.gameObject.SetActive(false);
             parentUiObject.gameObject.SetActive(true);  
+        }
+    }
+    //Daniel's code
+    public void ToggleCraftingUI()
+    {
+        if (craftingUIObject.gameObject.activeInHierarchy)
+        {
+            Cursor.visible = true;
+            
+            craftingUIObject.gameObject.SetActive(false);
+        }
+        else
+        {
+            Cursor.visible = false;
+            
+            craftingUIObject.gameObject.SetActive(true);
         }
     }
 }

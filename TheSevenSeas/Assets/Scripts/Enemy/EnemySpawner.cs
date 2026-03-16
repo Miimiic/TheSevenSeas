@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         if (player == null)
-            player = GameObject.Find("Player").transform;
+            player = GameObject.FindWithTag("Player").transform;
 
         StartCoroutine(SpawnLoop());
     }
