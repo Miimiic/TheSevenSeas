@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         if (cameraTransform != null)
         {
@@ -286,6 +286,35 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
         }
     }
+    public void SetStamina(float amount)
+    {
+        currentStamina = Mathf.Clamp(amount, 0f, maxStamina);
+        isOutOfStamina = currentStamina <= 0f;
+        HandleStaminaBar();
+    }
+    public void SetPlayerActive(bool active)
+    {
+        this.enabled = active;
+
+        // Disable/enable the rigidbody so physics doesn't affect an "inactive" player
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.isKinematic = !active;
+        }
+
+        if (active)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+}
 
     public void SetSensitivity(float sensitivity) => mouseSensitivity = sensitivity;
     public void SetSmoothing(float smoothAmount) => smoothing = Mathf.Clamp(smoothAmount, 1f, 20f);

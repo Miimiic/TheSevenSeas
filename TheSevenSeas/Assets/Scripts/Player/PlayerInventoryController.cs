@@ -88,6 +88,14 @@ public class PlayerInventoryController : MonoBehaviour
     {
         eldritchHeartAmount += eldritchHeartToAdd;
     }
+    public void SetWood(int v)               { woodAmount = v; }
+    public void SetBrick(int v)              { brickAmount = v; }
+    public void SetMetal(int v)              { metalAmount = v; }
+    public void SetNails(int v)              { nailAmount = v; }
+    public void SetMetalPipes(int v)         { metalPipeAmount = v; }
+    public void SetInstructionManuals(int v) { instructionManualAmount = v; }
+    public void SetWorkerFlesh(int v)        { workerFleshAmount = v; }
+    public void SetEldritchHearts(int v)     { eldritchHeartAmount = v; }
 
 
 }

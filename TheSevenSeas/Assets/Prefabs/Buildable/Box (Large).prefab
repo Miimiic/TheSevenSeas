@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1232843840635724176}
   - component: {fileID: 3806416709788882022}
   - component: {fileID: 4666055926872326861}
+  - component: {fileID: 4725381217074305474}
   m_Layer: 0
   m_Name: Box (Large)
   m_TagString: Untagged
@@ -124,6 +125,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 2, y: 2}
   originPoint: {fileID: 3608715857325671894}
+--- !u!114 &4725381217074305474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7228647787784349773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24faf54f0476d7e48bbedc49910b6494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabId: Box (Large)
+  health: 100
 --- !u!1 &7779242989915026868
 GameObject:
   m_ObjectHideFlags: 0
