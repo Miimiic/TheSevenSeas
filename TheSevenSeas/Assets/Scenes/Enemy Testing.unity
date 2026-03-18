@@ -341,6 +341,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff135e9fd19573b47886ba9d2a3f4a34, type: 3}
+--- !u!4 &252381583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3568811185952832113, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
+  m_PrefabInstance: {fileID: 482532812}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &307776318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,13 +1054,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
-  player: {fileID: 3568811185952832113, guid: f733149153f1e0f458a6b14026bc964d, type: 3}
+  player: {fileID: 252381583}
   maxSpawnDist: 30
   minSpawnDist: 10
-  maxEnemies: 5
+  maxEnemies: 10
   spawnInterval: 1
-  cullDistance: 35
-  cullCheckInterval: 0.1
+  despawnDist: 50
 --- !u!4 &841818306
 Transform:
   m_ObjectHideFlags: 0
