@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: fe987ccf981018e40982d1768a0ef2b2, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!114 &145546149
 MonoBehaviour:
@@ -6824,6 +6824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1026353371}
   - component: {fileID: 1026353370}
+  - component: {fileID: 1026353372}
   m_Layer: 0
   m_Name: ---------- Enemy Manager ----------
   m_TagString: Untagged
@@ -6845,10 +6846,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3365023873755317225, guid: ec60d5ccfc0ed4947bd229f4e66b1084, type: 3}
   player: {fileID: 7527413281361678997}
-  spawnRadius: 100
-  minSpawnDistance: 45
-  maxEnemies: 10
-  spawnInterval: 10
+  maxSpawnDist: 100
+  minSpawnDist: 60
+  maxEnemies: 5
+  spawnInterval: 1
+  despawnDist: 110
 --- !u!4 &1026353371
 Transform:
   m_ObjectHideFlags: 0
@@ -6864,6 +6866,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1026353372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026353369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c90b7ea488ae6459c173f1b73691a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshSurface: {fileID: 145546148}
+  rebakeDelay: 0.5
 --- !u!1 &1045467061
 GameObject:
   m_ObjectHideFlags: 0

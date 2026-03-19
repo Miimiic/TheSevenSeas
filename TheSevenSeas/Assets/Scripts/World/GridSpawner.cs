@@ -67,7 +67,9 @@ public class GridSpawner : MonoBehaviour
     [Header("World Seed")]
     public int worldSeed = 0;
     public bool useRandomSeed = true;
-    
+
+    private RuntimeNavMeshBaker navMeshBaker;
+
     private int cullingLayer = -1;
     
     private struct SpawnData 
@@ -91,6 +93,8 @@ public class GridSpawner : MonoBehaviour
 
         // Spawning is triggered by GameStateController via NewGame() or LoadGame()
         // Never spawns automatically on Start
+
+        navMeshBaker = GetComponent<RuntimeNavMeshBaker>();
     }
     
     // ---------------- SYNCHRONOUS SPAWNING FOR EDIT MODE ----------------
@@ -315,9 +319,12 @@ public class GridSpawner : MonoBehaviour
         
         isSpawning = false;
         distanceRenderer?.RefreshTrackedObjects();
-        
+
         if (showProgress)
+        {
+            navMeshBaker.RequestRebake();
             Debug.Log($"Wall spawning complete! Total: {wallsSpawned}");
+        }
     }
     
     // ---------------- RUN SPAWNING (called by GameStateController) ----------------
