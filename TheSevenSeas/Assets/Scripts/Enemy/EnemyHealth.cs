@@ -6,6 +6,9 @@ public class EnemyHealth : MonoBehaviour
     public float maxHealth;
     public float health;
     public bool tookDamage = false;
+    public GameObject blood;
+    public GameObject resource;
+
 
     private void Start()
     {
@@ -30,6 +33,14 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             Die();
+            Instantiate(blood,transform.position, Quaternion.identity); 
+
+            float rand = Random.Range(0, 1);
+            if (rand<=0.5)
+            {
+                Instantiate(resource,transform.position, Quaternion.identity);
+            }
+            
         }
     }
 

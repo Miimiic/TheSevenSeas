@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724ecad926ece52439e097bd18a1639e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guiHealthText: {fileID: 801949899}
+  healthBarMask: {fileID: 0}
   playerCurrentHealth: 0
   playerMaxHealth: 0
   playerArmourLevel: 0
@@ -359,11 +359,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentUiObject: {fileID: 1324433713}
+  craftingUIObject: {fileID: 0}
   basicMaterialText: {fileID: 526868832}
   rareMaterialText: {fileID: 902082922}
   healthText: {fileID: 1653388535}
   armourText: {fileID: 2053156594}
-  mainHealthText: {fileID: 801949899}
+  mainHealthBar: {fileID: 0}
 --- !u!114 &329598128
 MonoBehaviour:
   m_ObjectHideFlags: 0

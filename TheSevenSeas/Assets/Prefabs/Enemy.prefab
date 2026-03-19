@@ -171,6 +171,8 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   tookDamage: 0
+  blood: {fileID: 4227297792760824461, guid: 2c6d0008feb38f143a76613a0e9c9c03, type: 3}
+  resource: {fileID: 5505077616902369356, guid: 266327a7dc0c9564188b1d06f21afb9b, type: 3}
 --- !u!114 &4150585911672768302
 MonoBehaviour:
   m_ObjectHideFlags: 0

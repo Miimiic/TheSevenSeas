@@ -19,10 +19,6 @@ public class SplashDamageController : MonoBehaviour
     {
         if(other.gameObject.tag=="Enemy")
         {
-            if(other.GetComponent<EnemyHealth>().health-15<=0)
-            {
-                Instantiate(bloodSpray,other.transform.position, Quaternion.identity);
-            }
             other.GetComponent<EnemyHealth>().TakeDamage(15);
         }
         if(other.gameObject.tag=="Mech")
