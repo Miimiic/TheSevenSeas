@@ -44,6 +44,10 @@ public class EnemyAIController : MonoBehaviour
     public float patrolSpeed;
     public float chaseSpeed;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip idleClip;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -54,6 +58,7 @@ public class EnemyAIController : MonoBehaviour
         enemyAttack = GetComponent<EnemyAttack>();
         enemyHealth = GetComponent<EnemyHealth>();
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         priorityTarget = player;
 
@@ -254,6 +259,7 @@ public class EnemyAIController : MonoBehaviour
         isWaiting = true;
         agent.isStopped = true;
         SetAnimation(true, false, false, false);
+        audioSource.PlayOneShot(idleClip);
 
         float waitTime = Random.Range(2f, 5f);
         yield return new WaitForSeconds(waitTime);

@@ -130,6 +130,7 @@ public class GunMechanics : MonoBehaviour
                     if (enemyHealth != null)
                     {
                         enemyHealth.TakeDamage(Raycastdamage);
+                        enemyHealth.tookDamage = true;
                     }
                     else
                     {
