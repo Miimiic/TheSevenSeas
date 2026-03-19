@@ -1,219 +1,174 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("UI References")]
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button settingsButton;
-    [SerializeField] private Button quitButton;
-    
-    [Header("Fade Settings")]
-    [SerializeField] private CanvasGroup fadeCanvasGroup;
-    [SerializeField] private float fadeDuration = 1f;
-    
-    [Header("Loading Screen")]
-    [SerializeField] private GameObject loadingScreen;
+    [Header("UI Panels")]
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject loadingPanel;
+
+    [Header("Loading Bar")]
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private TextMeshProUGUI debugText; // NEW: Add this for debug info
-    [SerializeField] private float minimumLoadTime = 1f;
-    
-    [Header("Scene Settings")]
-    [SerializeField] private string gameplaySceneName = "Main Gameplay";
-    
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogging = true;
-    
-    private bool isTransitioning = false;
-    
+
+    [Header("Buttons")]
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button loadGameButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button quitButton;
+
+    [Header("Fade")]
+    [SerializeField] private CanvasGroup fadeCanvasGroup;
+    [SerializeField] private float fadeDuration = 1f;
+
+    [Header("References")]
+    [SerializeField] private GameStateController gameStateController;
+    [SerializeField] private GridSpawner gridSpawner;
+
+    [Header("Player Scripts To Disable During Menu")]
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private MonoBehaviour[] playerScriptsToDisable;
+
     private void Start()
     {
-        // Setup button listeners
-        if (startButton != null)
-            startButton.onClick.AddListener(OnStartButtonClicked);
-        
-        if (settingsButton != null)
-            settingsButton.onClick.AddListener(OnSettingsButtonClicked);
-        
-        if (quitButton != null)
-            quitButton.onClick.AddListener(OnQuitButtonClicked);
-        
-        // Ensure fade panel starts transparent
+        SetPlayerInputActive(false);
+
+        mainMenuPanel.SetActive(true);
+        loadingPanel.SetActive(false);
+
         if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.alpha = 0f;
             fadeCanvasGroup.blocksRaycasts = false;
         }
-        
-        // Ensure loading screen starts hidden
-        if (loadingScreen != null)
-            loadingScreen.SetActive(false);
+
+        newGameButton?.onClick.AddListener(OnNewGameClicked);
+        loadGameButton?.onClick.AddListener(OnLoadGameClicked);
+        settingsButton?.onClick.AddListener(OnSettingsClicked);
+        quitButton?.onClick.AddListener(OnQuitClicked);
+
+        if (loadGameButton != null)
+            loadGameButton.interactable = SaveManager.Instance.HasSave();
     }
-    
-    private void OnStartButtonClicked()
+
+    private void SetPlayerInputActive(bool active)
     {
-        if (!isTransitioning)
-        {
-            StartCoroutine(LoadSceneWithFadeAndLoading(gameplaySceneName));
-        }
+        if (playerController != null)
+            playerController.SetPlayerActive(active);
+
+        foreach (var script in playerScriptsToDisable)
+            if (script != null) script.enabled = active;
     }
-    
-    private void OnSettingsButtonClicked()
+
+    private void OnNewGameClicked()
     {
-        Debug.Log("Settings button clicked!");
+        gridSpawner.useRandomSeed = true;
+        StartCoroutine(FadeThenSpawn(isLoad: false));
     }
-    
-    private void OnQuitButtonClicked()
+
+    private void OnLoadGameClicked()
     {
-        Debug.Log("Quit button clicked!");
-        
+        gridSpawner.useRandomSeed = false;
+        StartCoroutine(FadeThenSpawn(isLoad: true));
+    }
+
+    private void OnSettingsClicked()
+    {
+        Debug.Log("Settings clicked");
+    }
+
+    private void OnQuitClicked()
+    {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
     }
-    
-    private IEnumerator LoadSceneWithFadeAndLoading(string sceneName)
+
+    private IEnumerator FadeThenSpawn(bool isLoad)
     {
-        isTransitioning = true;
-        
-        DebugLog("=== LOADING STARTED ===");
-        DebugLog($"Target scene: {sceneName}");
-        
-        // Enable raycasts blocking during transition
+        // 1. Fade to black
         if (fadeCanvasGroup != null)
+        {
             fadeCanvasGroup.blocksRaycasts = true;
-        
-        DebugLog("Starting fade out...");
-        
-        // Fade out
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            if (fadeCanvasGroup != null)
-                fadeCanvasGroup.alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
-            yield return null;
-        }
-        
-        // Ensure fade is complete
-        if (fadeCanvasGroup != null)
-            fadeCanvasGroup.alpha = 1f;
-        
-        DebugLog("Fade out complete");
-        
-        // Show loading screen
-        if (loadingScreen != null)
-            loadingScreen.SetActive(true);
-        
-        DebugLog("Loading screen shown");
-        
-        // Small delay for visual transition
-        yield return new WaitForSeconds(0.2f);
-        
-        DebugLog("Starting async scene load...");
-        
-        // Start async loading
-        float startTime = Time.time;
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
-        
-        DebugLog("AsyncOperation created");
-        
-        float lastProgress = -1f;
-        int frameCount = 0;
-        float lastFrameTime = Time.time;
-        
-        // Update progress bar while loading
-        while (!operation.isDone)
-        {
-            frameCount++;
-            float currentTime = Time.time;
-            float deltaTime = currentTime - lastFrameTime;
-            lastFrameTime = currentTime;
-            
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            
-            // Log when progress changes
-            if (Mathf.Abs(progress - lastProgress) > 0.01f)
+            float t = 0f;
+            while (t < fadeDuration)
             {
-                DebugLog($"Progress: {progress * 100:F2}% | Raw: {operation.progress:F3} | Frame: {frameCount} | Delta: {deltaTime:F3}s");
-                lastProgress = progress;
+                t += Time.deltaTime;
+                fadeCanvasGroup.alpha = Mathf.Clamp01(t / fadeDuration);
+                yield return null;
             }
-            
-            // Update UI
+            fadeCanvasGroup.alpha = 1f;
+        }
+
+        // 2. Swap to loading screen
+        mainMenuPanel.SetActive(false);
+        loadingPanel.SetActive(true);
+
+        if (progressBar != null) progressBar.value = 0f;
+        if (progressText != null) progressText.text = "0%";
+
+        // 3. Fade back in to show loading screen
+        if (fadeCanvasGroup != null)
+        {
+            float t = 0f;
+            while (t < fadeDuration)
+            {
+                t += Time.deltaTime;
+                fadeCanvasGroup.alpha = 1f - Mathf.Clamp01(t / fadeDuration);
+                yield return null;
+            }
+            fadeCanvasGroup.alpha = 0f;
+            fadeCanvasGroup.blocksRaycasts = false;
+        }
+
+        // 4. Track progress on bar
+        StartCoroutine(TrackSpawnProgress());
+
+        // 5. Trigger spawning
+        if (isLoad)
+            gameStateController.LoadGame();
+        else
+            gameStateController.NewGame();
+
+        // 6. Wait until spawning is fully complete
+        yield return new WaitUntil(() =>
+            gridSpawner.GetSpawningProgress() >= 1f && !gridSpawner.IsSpawning());
+
+        // 7. Hide loading panel
+        loadingPanel.SetActive(false);
+
+        // 8. Re-enable the player — was incorrectly set to false before!
+        SetPlayerInputActive(true);
+    }
+
+    private IEnumerator TrackSpawnProgress()
+    {
+        while (loadingPanel.activeSelf)
+        {
+            float progress = gridSpawner.GetSpawningProgress();
+
             if (progressBar != null)
                 progressBar.value = progress;
-            
+
             if (progressText != null)
                 progressText.text = $"{(progress * 100):0}%";
-            
-            // Update debug text on screen
-            if (debugText != null)
-            {
-                debugText.text = $"Progress: {progress * 100:F1}%\n" +
-                                $"Raw Progress: {operation.progress:F3}\n" +
-                                $"Frame: {frameCount}\n" +
-                                $"Time: {(currentTime - startTime):F2}s\n" +
-                                $"FPS: {(1f / deltaTime):F0}";
-            }
-            
-            // Check if loading is complete
-            if (operation.progress >= 0.9f)
-            {
-                DebugLog($"Scene loaded! Total time: {Time.time - startTime:F2}s, Frames: {frameCount}");
-                
-                // Wait for minimum load time if needed
-                float loadElapsedTime = Time.time - startTime;
-                if (loadElapsedTime < minimumLoadTime)
-                {
-                    float waitTime = minimumLoadTime - loadElapsedTime;
-                    DebugLog($"Waiting {waitTime:F2}s to meet minimum load time");
-                    yield return new WaitForSeconds(waitTime);
-                }
-                
-                // Show 100%
-                if (progressBar != null)
-                    progressBar.value = 1f;
-                if (progressText != null)
-                    progressText.text = "100%";
-                
-                DebugLog("Showing 100% and waiting 0.3s before activation");
-                yield return new WaitForSeconds(0.3f);
-                
-                // Activate the scene
-                DebugLog("Activating scene...");
-                operation.allowSceneActivation = true;
-            }
-            
+
             yield return null;
         }
-        
-        DebugLog("=== LOADING COMPLETE ===");
+
+        if (progressBar != null) progressBar.value = 1f;
+        if (progressText != null) progressText.text = "100%";
     }
-    
-    private void DebugLog(string message)
-    {
-        if (enableDebugLogging)
-        {
-            Debug.Log($"[MainMenu] {message}");
-        }
-    }
-    
+
     private void OnDestroy()
     {
-        if (startButton != null)
-            startButton.onClick.RemoveListener(OnStartButtonClicked);
-        
-        if (settingsButton != null)
-            settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
-        
-        if (quitButton != null)
-            quitButton.onClick.RemoveListener(OnQuitButtonClicked);
+        newGameButton?.onClick.RemoveAllListeners();
+        loadGameButton?.onClick.RemoveAllListeners();
+        settingsButton?.onClick.RemoveAllListeners();
+        quitButton?.onClick.RemoveAllListeners();
     }
 }
