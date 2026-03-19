@@ -80,10 +80,6 @@ public class MechWeaponController : MonoBehaviour
 
                 if (enemyHealth != null)
                 {
-                    if (enemyHealth.GetComponent<EnemyHealth>().health-damage <= 0)
-                    {
-                        Instantiate(bloodSplatter,hit.point, hit.transform.rotation);
-                    }
                     enemyHealth.TakeDamage(damage);
                 }
                 else
