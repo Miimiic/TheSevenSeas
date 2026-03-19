@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Health Info")]
     public float maxHealth;
     public float health;
     public bool tookDamage = false;

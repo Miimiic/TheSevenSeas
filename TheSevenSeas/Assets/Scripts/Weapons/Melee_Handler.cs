@@ -82,6 +82,7 @@ public class Melee_Handler : MonoBehaviour
             durability -= 1;
             var enemyHealth = other.GetComponent<EnemyHealth>();
             enemyHealth.TakeDamage(DamageOnHit);
+            enemyHealth.tookDamage = true;
         }
 
         if(other.tag == "Breakable") 
