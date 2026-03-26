@@ -61,6 +61,11 @@ public class MechEntering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isInMech)
+        {
+            player.transform.position = mechCamera.transform.position;
+        }
+
         if (Input.GetKeyUp(KeyCode.E))
         {
             if  (!mechHealth.IsTitanDead())

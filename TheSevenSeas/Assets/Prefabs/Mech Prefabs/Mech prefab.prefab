@@ -2628,6 +2628,37 @@ Transform:
   - {fileID: 7032219462874557246}
   m_Father: {fileID: 6083331909749464733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &850827578281964357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4247997606006339082}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4247997606006339082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850827578281964357}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.7878113, y: -25.307066, z: -8.234467}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5733049624767849910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &859608707122398183
 GameObject:
   m_ObjectHideFlags: 0
@@ -9697,6 +9728,7 @@ Transform:
   m_Children:
   - {fileID: 2703940393990506149}
   - {fileID: 1580587004874633508}
+  - {fileID: 4247997606006339082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2691760912600532376
@@ -11024,13 +11056,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerModel: {fileID: 0}
+  playerCollider: {fileID: 0}
   playerController: {fileID: 0}
   mainPlayerCamera: {fileID: 0}
   playerHealthUIObject: {fileID: 0}
+  mechFeet: {fileID: 0}
   mechModel: {fileID: 2297583302978666338}
   mechMovement: {fileID: 8310693305994302050}
   mechAbility: {fileID: 6655423792209301585}
   mechHealth: {fileID: 6249639620203178146}
+  mechWeapon: {fileID: 0}
   mechCamera: {fileID: 1302868820359416000}
   mechExitArea: {fileID: 3726501655182998600}
   headlight: {fileID: 1691159142059292972}
@@ -11062,6 +11098,27 @@ MonoBehaviour:
   invincibility: 0
   shieldsRegenning: 0
   shieldRegenLockoutTime: 0
+  isTitanDead: 0
+  mechEntering: {fileID: 0}
+  mechAbilityController: {fileID: 0}
+  mechMovementController: {fileID: 0}
+  mechScriptObject: {fileID: 0}
+  mechModel: {fileID: 0}
+  mainCollider: {fileID: 0}
+  mainRigidbody: {fileID: 0}
+  titanfallSpeed: 0
+  mainPlayerCamera: {fileID: 0}
+  titanfallMarker: {fileID: 0}
+  titanfallDustImpact: {fileID: 0}
+  maxTitanfallCooldown: 0
+  titanfallCooldown: 0
+  blockTitanCooldown: 0
+  canCallTitan: 0
+  titanIsFalling: 0
+  hasSmoked: 0
+  titanfallCanLandOnMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!136 &7386425798849238697
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11139,6 +11196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16877341aaacc6428589899251ad0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mechCrushCollider: {fileID: 0}
+  bloodSpray: {fileID: 0}
   moveSpeed: 13
   hasDashed: 0
   currentMovementSmoothing: 1
@@ -12737,7 +12796,7 @@ Transform:
   m_GameObject: {fileID: 3726501655182998600}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.10499573, y: -2.5751266, z: 2.052002}
+  m_LocalPosition: {x: -0.10499573, y: 0.86, z: 2.052002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
